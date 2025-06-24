@@ -179,7 +179,7 @@ namespace GenAIExpertEngineAPI.Services
                 // These methods usually reside in a generated static class or a specific extension namespace
                 // The exact namespace might vary, often it's CSharpToJsonSchema.Internal or similar,
                 // depending on your CSharpToJsonSchema package version and setup.
-                var csharpTools = _characterStateManager.AsGoogleFunctionTool();
+                //var characterFunctionTool = _characterStateManager.AsGoogleFunctionTool();
 
                 geminiResponse = await _geminiService.GenerateContentWithToolsAsync(
                     prompt: contextualPrompt,
