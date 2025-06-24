@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>AI GM Orchestrator Test Client</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Make chat container take most of viewport height */
+        }
+
+        #chat-dialogue {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto; /* Enable scrolling for chat history */
+            border-bottom: 1px solid #eee;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+            .message.user {
+                background-color: #e6f7ff;
+                align-self: flex-end;
+                margin-left: auto;
+                text-align: right;
+                border-bottom-right-radius: 0;
+            }
+
+            .message.ai {
+                background-color: #f0f0f0;
+                align-self: flex-start;
+                margin-right: auto;
+                text-align: left;
+                border-bottom-left-radius: 0;
+            }
+
+            .message strong {
+                color: #555;
+            }
+
+        #input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+
+        #send-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+            #send-button:hover {
+                background-color: #0056b3;
+            }
+
+        /* Styles for suggestions */
+        .suggestions-container {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 5px;
+            background-color: #fdfdfd;
+            border-radius: 5px;
+            border: 1px dashed #eee;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Space between buttons */
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .suggestion-button {
+            padding: 8px 15px;
+            border: 1px solid #007bff;
+            border-radius: 20px;
+            background-color: #e0f2ff; /* Light blue */
+            color: #0056b3;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s, transform 0.2s;
+            white-space: nowrap; /* Prevent text wrapping inside button */
+        }
+
+            .suggestion-button:hover {
+                background-color: #cce9ff;
+                transform: translateY(-1px);
+            }
+
+            .suggestion-button:active {
+                transform: translateY(0);
+            }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-dialogue">
+        </div>
+        <div id="input-area">
+            <textarea type="text" id="user-input" placeholder="Type your message..."></textarea>
+            <button type="submit" id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatDialogue = document.getElementById('chat-dialogue');
+        const userInputField = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        let currentConversationId = sessionStorage.getItem('conversationId');
+
+        // If no conversationId exists in session storage, generate a new one
+        if (currentConversationId == "" || !currentConversationId) {
+            currentConversationId = crypto.randomUUID(); // Generates a UUID
+            sessionStorage.setItem('conversationId', currentConversationId); // Store it
+            console.log('New conversation ID generated:', currentConversationId);
+            appendMessage('system', `New conversation started. ID: ${currentConversationId}`);
+        } else {
+            console.log('Resuming conversation with ID:', currentConversationId);
+            appendMessage('system', `Resuming conversation. ID: ${currentConversationId}`);
+        }
+
+        // Allow sending message with Enter key
+        userInputField.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const userMessage = userInputField.value.trim();
+            if (userMessage === "") return;
+
+            // Append user's message to chat dialogue
+            appendMessage(userMessage, 'user');
+            userInputField.value = ''; // Clear input field
+            sendButton.disabled = true; // Disable button to prevent double-clicks
+            userInputField.disabled = true; // Disable input field
+
+            try {
+                // Send user message to your backend API
+                // Adjust endpoint as per your ExpertController setup (e.g., /Expert/query)
+                const response = await fetch('api/Expert/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    // Replace 'test-convo-id' with a dynamic ID if your backend tracks conversations
+                    body: JSON.stringify({ conversationId: currentConversationId, userText: userMessage }),
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+                }
+
+                // Parse the structured JSON response from RefereeResponseOutput
+                const aiResponse = await response.json(); // This will be your RefereeResponseOutput object
+
+                // Append AI's narrative
+                appendMessage(aiResponse.narrative, 'ai');
+
+                // Append clickable suggestions if any are present
+                if (aiResponse.suggestions && aiResponse.suggestions.length > 0) {
+                    appendSuggestions(aiResponse.suggestions);
+                }
+
+            } catch (error) {
+                console.error('Error sending message:', error);
+                appendMessage(`AI encountered an error: ${error.message}`, 'system-error');
+            } finally {
+                sendButton.disabled = false; // Re-enable button
+                userInputField.disabled = false; // Re-enable input field
+                userInputField.focus(); // Focus input field for next message
+            }
+        }
+
+        // Helper function to append a message to the chat dialogue
+        function appendMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            // Replace newlines with <br> for proper rendering in HTML
+            messageElement.innerHTML = `<strong>${sender === 'user' ? 'You' : 'AI'}:</strong> ${message.replace(/\n/g, '<br>')}`;
+            chatDialogue.appendChild(messageElement);
+            chatDialogue.scrollTop = chatDialogue.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Helper function to append clickable suggestions
+        function appendSuggestions(suggestions) {
+            const suggestionsContainer = document.createElement('div');
+            suggestionsContainer.classList.add('suggestions-container');
+
+            suggestions.forEach(suggestionText => {
+                const suggestionButton = document.createElement('button');
+                suggestionButton.classList.add('suggestion-button');
+                suggestionButton.textContent = suggestionText;
+                suggestionButton.onclick = () => sendSuggestionMessage(suggestionText); // Attach click handler
+                suggestionsContainer.appendChild(suggestionButton);
+            });
+
+            chatDialogue.appendChild(suggestionsContainer);
+            chatDialogue.scrollTop = chatDialogue.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Function to handle sending a suggestion as a new user message
+        async function sendSuggestionMessage(suggestionText) {
+            userInputField.value = suggestionText; // Populate input field (good UX)
+            await sendMessage(); // Send it as a regular message
+        }
+    </script>
+</body>
+</html>

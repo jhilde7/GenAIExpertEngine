@@ -1,0 +1,74 @@
+{
+  "Experts": [
+    {
+      "Name": "Character Expert",
+      "IntentName": "query_character_rules",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/5476377146882523136",
+      "Description": "For questions concerning player characters, NPCs, detailed character classes (including Gnome, Druid, Ranger, Duergar, Drow, Half-orc, Half-elf, Svirfneblin, Illusionist, Paladin, Necromancer, Knight), character sheets, abilities, saving throws, general character mechanics, racial class and level restrictions (e.g., maximum levels, disallowed classes like dwarves not being magic-users, halflings' fighter limits), optional rules for multi-classing (including demihuman combinations), equipment (weapons, armor, adventuring gear), purchasing equipment during character creation, and level progression for specific classes."
+    },
+    {
+      "Name": "Magic Expert",
+      "IntentName": "query_magic_rules",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/5685794529555251200",
+      "Description": "For questions about spells, magic items, spellcasting rules, magical research, and enchantments."
+    },
+    {
+      "Name": "Monster Expert",
+      "IntentName": "query_monster_info",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/2227030015734710272",
+      "Description": "For inquiries about creatures, monsters, their statistics (e.g., hit dice, AC, attacks), special abilities, descriptions, and encounter information."
+    },
+    {
+      "Name": "Treasure Expert",
+      "IntentName": "query_treasure_info",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/9144559043375792128",
+      "Description": "For questions related to loot, gems, coinage, magical artifacts, and treasure generation."
+    },
+    {
+      "Name": "Adventuring Expert",
+      "IntentName": "query_gameplay_rules",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/5901967311669035008",
+      "Description": "For topics involving dungeon adventuring (e.g., doors, traps, sequence of play), wilderness adventuring (e.g., surprise, wandering monsters, hunting, foraging, losing direction), waterborne adventuring, encounter procedures (e.g., actions, sequence, evasion), combat rules (e.g., initiative, attacking, damage, morale, conditions), encumbrance, hazards, challenges (e.g., swimming, climbing, darkness), party organization, measurements, and general sequences of play for running an adventure."
+    },
+    {
+      "Name": "Referee Expert",
+      "IntentName": "query_referee_guidance",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/713820540938223616",
+      "Description": "For questions concerning the referee's role and responsibilities, facilitating gameplay, making rulings, managing player actions, ensuring fairness and improvisation, game mechanics and procedures (e.g., ability checks, XP awarding, time/movement tracking, PC actions, monster/NPC behavior), adventure and encounter design (e.g., describing the world, maintaining mystery, balancing challenges), and player interaction and management (e.g., player vs. character knowledge, handling disputes, PC advancement, party roles)."
+    },
+    {
+      "Name": "Adventure Module Expert",
+      "IntentName": "query_adventure_module",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/5037276183213899776",
+      "Description": "For questions concerning specific, pre-written adventure modules or scenarios, including their unique settings, read-aloud text, background stories, integrated plot hooks, detailed questlines, and specific encounter tables or events unique to that module."
+    },
+    {
+      "Name": "Scenario NPC Expert",
+      "IntentName": "query_scenario_npc",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/7631349568579305472",
+      "Description": "For specific inquiries about individual named NPCs within adventure modules, including their unique personality traits , goals and desires , specific interaction options (e.g., initial state, release conditions, cooperation terms, demands, trucess, reactions, pacification, freedom conditions) , and known information they can share within the context of a particular scenario."
+    },
+    {
+      "Name": "Narrative Expert",
+      "IntentName": "narrative_query",
+      "Type": "NARRATIVE_ONLY",
+      "CorpusId": null,
+      "Description": "For purely narrative or descriptive questions where no specific rule, stat, or defined lore needs to be looked up. Use this for questions about the appearance of a location, the atmosphere of a scene, the general demeanor of unspecified characters, or open-ended 'what happens next?' queries that require creative improvisation."
+    },
+    {
+      "Name": "Character & Core Systems Overview",
+      "IntentName": "query_character_core_systems_overview",
+      "Type": "AI_RAG",
+      "CorpusId": "projects/gen-lang-client-0059898813/locations/us-central1/ragCorpora/1578511669393358848",
+      "Description": "For questions concerning high-level overviews and conceptual understanding of character definition, creation, progression, and related core game systems. This corpus provides summaries of: general player character definitions and their fundamental statistical components; the overall character creation process, including the optional separate selection of race and class, and the integration points for advanced character customization rules; the comprehensive Ability Score system, detailing the purpose and impact of each of the six core abilities and Prime Requisites; the game's Alignment system, defining its three cosmic principles and their influence on characters; the game's Language system, encompassing common, alignment, and other learnable languages; the Experience and Leveling progression, from gaining XP to reaching new levels, including general rules for high-level play; the game's Wealth and Economy system, covering currency, starting funds, and long-term financial endeavors like inheritance and domains; the Equipment system, broadly categorizing adventuring gear, weapons, and armor, and the concepts of their properties and effects; Vehicle and Mount mechanics, providing an overview of vehicle statistics, damage/repair rules, boarding procedures, and types of land/water conveyances and beasts of burden; the Hired Help system, distinguishing between Retainers, Mercenaries, and Specialists, and their general roles; Stronghold construction and domain management, outlining the process of building bases and founding territories; and key optional and advanced rules that directly pertain to character building and progression."
+    }
+  ]
+}

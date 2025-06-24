@@ -1,0 +1,90 @@
+@GenAIExpertEngineAPI_HostAddress = http://localhost:5052
+
+###
+# ==================================
+#      AI Expert API Tests
+# ==================================
+###
+
+### Query for Monster Expert
+# This should be routed to the Monster Expert.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "query": "How many hit dice does a troll have?"
+}
+
+### Query for Magic Expert
+# This should be routed to the Magic Expert.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "query": "What is the range of a magic missile spell?"
+}
+
+### Query for Character Expert
+# This should be routed to the Character Expert.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "query": "What is the maximum level for a halfling?"
+}
+
+### Query for a "TODO" Expert (Lore Expert)
+# This should be correctly identified as "Lore Expert", but return your custom message
+# because the CorpusId is null.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "query": "Can you tell me about the history of the gods in this world?"
+}
+
+### Query for an Out-of-Scope Topic
+# This should be identified as "UNKNOWN" by the orchestrator and return the generic
+# "Information not available" message.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "query": "What is the best way to cook a steak?"
+}
+
+###
+
+###
+# ==================================
+#   Conversational Dialogue Test
+# ==================================
+###
+
+# To test a conversation, first generate a unique ID and use it for all related requests.
+@conversationId = my-test-conversation-001
+
+### Turn 1: Initial Question
+# We ask about a troll. The server will answer and store this turn in history
+# under our conversationId.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "conversationId": "{{conversationId}}",
+  "query": "How many hit dice does a troll have?"
+}
+
+### Turn 2: Follow-up Question
+# We ask a follow-up question ("what about ITS treasure?").
+# Because we send the SAME conversationId, the server can look up the history,
+# understand that "its" refers to the troll, and route this to the Treasure Expert.
+POST {{GenAIExpertEngineAPI_HostAddress}}/api/expert/query
+Content-Type: application/json
+
+{
+  "conversationId": "{{conversationId}}",
+  "query": "I killed the troll, what do I get?"
+}
+
+###

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishAot>true</PublishAot>
+    <UserSecretsId>014ec609-3c7d-48a4-8da1-8419d6033103</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpToJsonSchema" Version="3.10.2-dev.39" />
+    <PackageReference Include="Google_GenerativeAI" Version="2.7.0" />
+    <PackageReference Include="Google_GenerativeAI.Tools" Version="2.7.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\TestClient.html" />
+  </ItemGroup>
+
+</Project>

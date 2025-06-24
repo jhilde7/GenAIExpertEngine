@@ -1,0 +1,4703 @@
+{
+  "GameSystemName": "Old-School Essentials (OSE)",
+  "Version": "1.0",
+  "Rules": {
+    "AbilityScoreModifiers": [
+      {
+        "value_min": 0,
+        "value_max": 2,
+        "modifier": -3
+      },
+      {
+        "value_min": 3,
+        "value_max": 5,
+        "modifier": -2
+      },
+      {
+        "value_min": 6,
+        "value_max": 8,
+        "modifier": -1
+      },
+      {
+        "value_min": 9,
+        "value_max": 12,
+        "modifier": 0
+      },
+      {
+        "value_min": 13,
+        "value_max": 15,
+        "modifier": 1
+      },
+      {
+        "value_min": 16,
+        "value_max": 17,
+        "modifier": 2
+      },
+      {
+        "int_score": 18,
+        "modifier": 3
+      }
+    ],
+    "CharacterDerivedStats": {
+      "LiteracyByIntelligence": [
+        {
+          "int_min": 0,
+          "int_max": 5,
+          "literacy": "Illiterate"
+        },
+        {
+          "int_min": 6,
+          "int_max": 8,
+          "literacy": "Basic"
+        },
+        {
+          "int_min": 9,
+          "int_max": 18,
+          "literacy": "Literate"
+        }
+      ],
+      "AdditionalLanguagesByIntelligence": [
+        {
+          "int_min": 0,
+          "int_max": 12,
+          "languages": 0
+        },
+        {
+          "int_min": 13,
+          "int_max": 15,
+          "languages": 1
+        },
+        {
+          "int_min": 16,
+          "int_max": 17,
+          "languages": 2
+        },
+        {
+          "int_score": 18,
+          "languages": 3
+        }
+      ],
+      "MaxRetainersByCharisma": [
+        {
+          "cha_score": 3,
+          "max_retainers": 1
+        },
+        {
+          "cha_min": 4,
+          "cha_max": 5,
+          "max_retainers": 2
+        },
+        {
+          "cha_min": 6,
+          "cha_max": 8,
+          "max_retainers": 3
+        },
+        {
+          "cha_min": 9,
+          "cha_max": 12,
+          "max_retainers": 4
+        },
+        {
+          "cha_min": 13,
+          "cha_max": 15,
+          "max_retainers": 5
+        },
+        {
+          "cha_min": 16,
+          "cha_max": 17,
+          "max_retainers": 6
+        },
+        {
+          "cha_score": 18,
+          "max_retainers": 7
+        }
+      ],
+      "RetainerLoyaltyByCharisma": [
+        {
+          "cha_score": 3,
+          "loyalty": 4
+        },
+        {
+          "cha_min": 4,
+          "cha_max": 5,
+          "loyalty": 5
+        },
+        {
+          "cha_min": 6,
+          "cha_max": 8,
+          "loyalty": 6
+        },
+        {
+          "cha_min": 9,
+          "cha_max": 12,
+          "loyalty": 7
+        },
+        {
+          "cha_min": 13,
+          "cha_max": 15,
+          "loyalty": 8
+        },
+        {
+          "cha_min": 16,
+          "cha_max": 17,
+          "loyalty": 9
+        },
+        {
+          "cha_score": 18,
+          "loyalty": 10
+        }
+      ],
+      "NpcReactionBonusByCharisma": [
+        {
+          "cha_score": 3,
+          "bonus": -2
+        },
+        {
+          "cha_min": 4,
+          "cha_max": 8,
+          "bonus": -1
+        },
+        {
+          "cha_min": 9,
+          "cha_max": 12,
+          "bonus": 0
+        },
+        {
+          "cha_min": 13,
+          "cha_max": 17,
+          "bonus": 1
+        },
+        {
+          "cha_score": 18,
+          "bonus": 2
+        }
+      ],
+      "OpenDoorChanceByStrength": [
+        {
+          "str_min": 0,
+          "str_max": 8,
+          "chance": "1-in-6"
+        },
+        {
+          "str_min": 9,
+          "str_max": 12,
+          "chance": "2-in-6"
+        },
+        {
+          "str_min": 13,
+          "str_max": 15,
+          "chance": "3-in-6"
+        },
+        {
+          "str_min": 16,
+          "str_max": 17,
+          "chance": "4-in-6"
+        },
+        {
+          "str_score": 18,
+          "chance": "5-in-6"
+        }
+      ]
+    },
+    "ClassSpecificRules": {
+      "StartingLanguages": {
+        "Svirfneblin": [ "Common", "Alignment", "Deepcommon", "Gnomish", "Dwarvish", "Kobold", "SecretEarthElemental" ],
+        "HalfOrc": [ "Common", "Alignment", "Orcish" ],
+        "Elf": [ "Common", "Alignment", "Elvish", "Gnoll", "Hobgoblin", "Orcish" ],
+        "Dwarf": [ "Common", "Alignment", "Dwarvish", "Gnomish", "Goblin", "Kobold" ],
+        "Default": [ "Common", "Alignment" ]
+      },
+      "HitDiceType": {
+        "Necromancer": "D4",
+        "MagicUser": "D4",
+        "Thief": "D4",
+        "Acrobat": "D4",
+        "Assassin": "D4",
+        "Gnome": "D4",
+        "Illusionist": "D4",
+        "Dwarf": "D8",
+        "Fighter": "D8",
+        "Barbarian": "D8",
+        "Knight": "D8",
+        "Paladin": "D8",
+        "Ranger": "D8",
+        "Default": "D6"
+      },
+      "HitDiceModifier": {
+        "Necromancer": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 1
+          }
+        ],
+        "Cleric": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 1
+          }
+        ],
+        "MagicUser": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 1
+          }
+        ],
+        "Druid": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 1
+          }
+        ],
+        "Illusionist": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 1
+          }
+        ],
+        "Dwarf": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "modifier": 3
+          }
+        ],
+        "Barbarian": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "modifier": 3
+          }
+        ],
+        "Duergar": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "modifier": 3
+          }
+        ],
+        "Default": [
+          {
+            "level_min": 1,
+            "level_max": 9,
+            "modifier": 0
+          },
+          {
+            "level_min": 10,
+            "level_max": 14,
+            "modifier": 2
+          }
+        ]
+      },
+      "MaxLevel": {
+        "Svirfneblin": 8,
+        "HalfOrc": 8,
+        "Halfling": 8,
+        "Gnome": 8,
+        "Duergar": 10,
+        "Drow": 10,
+        "Elf": 10,
+        "HalfElf": 12,
+        "Dwarf": 12,
+        "Default": 14
+      },
+      "XPForNextLevel": {
+        "Cleric": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 1500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 3000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 6000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 12000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 25000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 50000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 75000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 100000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 125000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 250000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 350000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 550000
+          }
+        ],
+        "Dwarf": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2200
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4400
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 8800
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 17000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 35000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 70000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 140000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 270000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 530000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 660000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 790000
+          }
+        ],
+        "Elf": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 4000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 8000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 16000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 32000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 64000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 250000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 730000
+          }
+        ],
+        "Fighter": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 8000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 16000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 32000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 64000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 240000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 360000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 480000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 720000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 840000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 960000
+          }
+        ],
+        "Halfling": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 8000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 16000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 32000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 64000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 240000
+          }
+        ],
+        "MagicUser": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 900000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 1050000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1200000
+          }
+        ],
+        "Thief": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 1200
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 2400
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 4800
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 9600
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 160000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 280000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 520000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 640000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 760000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 880000
+          }
+        ],
+        "Acrobat": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 1200
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 2400
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 4800
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 9600
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 160000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 280000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 520000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 640000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 760000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 880000
+          }
+        ],
+        "Assassin": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 1500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 3000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 6000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 12000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 25000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 50000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 100000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 200000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 425000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 575000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 900000
+          }
+        ],
+        "Barbarian": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 18500
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 37000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 85000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 140000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 270000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 530000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 660000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 790000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 920000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1050000
+          }
+        ],
+        "Bard": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 8000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 16000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 32000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 64000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 240000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 360000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 480000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 720000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 840000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 960000
+          }
+        ],
+        "Drow": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 600000
+          }
+        ],
+        "Druid": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 7500
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 12500
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 35000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 60000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 90000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 125000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 200000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 1500000
+          }
+        ],
+        "Duergar": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2800
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5600
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 11200
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 23000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 46000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 100000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 200000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 500000
+          }
+        ],
+        "Gnome": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 3000
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 6000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 12000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 30000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 60000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 240000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 480000
+          }
+        ],
+        "HalfElf": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 900000
+          }
+        ],
+        "HalfOrc": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 1800
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 3600
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 7000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 14000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 28000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 60000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 120000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 240000
+          }
+        ],
+        "Illusionist": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 900000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 1050000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1200000
+          }
+        ],
+        "Knight": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 18500
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 37000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 85000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 140000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 270000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 400000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 530000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 660000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 790000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 920000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1050000
+          }
+        ],
+        "Paladin": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2750
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5500
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 12000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 24000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 45000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 95000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 175000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 350000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 500000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 650000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 800000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 950000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 1100000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1250000
+          }
+        ],
+        "Ranger": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2250
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4500
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 90000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 425000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 550000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 675000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 800000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 925000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1050000
+          }
+        ],
+        "Svirfneblin": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2400
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 4800
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 160000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 320000
+          }
+        ],
+        "Necromancer": [
+          {
+            "current_level": 1,
+            "xp_required_for_next_level": 2500
+          },
+          {
+            "current_level": 2,
+            "xp_required_for_next_level": 5000
+          },
+          {
+            "current_level": 3,
+            "xp_required_for_next_level": 10000
+          },
+          {
+            "current_level": 4,
+            "xp_required_for_next_level": 20000
+          },
+          {
+            "current_level": 5,
+            "xp_required_for_next_level": 40000
+          },
+          {
+            "current_level": 6,
+            "xp_required_for_next_level": 80000
+          },
+          {
+            "current_level": 7,
+            "xp_required_for_next_level": 150000
+          },
+          {
+            "current_level": 8,
+            "xp_required_for_next_level": 300000
+          },
+          {
+            "current_level": 9,
+            "xp_required_for_next_level": 450000
+          },
+          {
+            "current_level": 10,
+            "xp_required_for_next_level": 600000
+          },
+          {
+            "current_level": 11,
+            "xp_required_for_next_level": 750000
+          },
+          {
+            "current_level": 12,
+            "xp_required_for_next_level": 900000
+          },
+          {
+            "current_level": 13,
+            "xp_required_for_next_level": 1050000
+          },
+          {
+            "current_level": 14,
+            "xp_required_for_next_level": 1200000
+          }
+        ]
+      },
+      "XPModifierAbilityScoreRules": [
+        {
+          "score_min": 0,
+          "score_max": 5,
+          "multiplier": 0.80
+        },
+        {
+          "score_min": 6,
+          "score_max": 8,
+          "multiplier": 0.90
+        },
+        {
+          "score_min": 9,
+          "score_max": 12,
+          "multiplier": 1.00
+        },
+        {
+          "score_min": 13,
+          "score_max": 15,
+          "multiplier": 1.05
+        },
+        {
+          "score_min": 16,
+          "score_max": 18,
+          "multiplier": 1.10
+        }
+      ],
+      "PrimeRequisitesRule": {
+        "Cleric": { "primary_ability": "Wis" },
+        "Druid": { "primary_ability": "Wis" },
+        "Thief": { "primary_ability": "Dex" },
+        "Bard": { "primary_ability": "Cha" },
+        "MagicUser": { "primary_ability": "Int" },
+        "Illusionist": { "primary_ability": "Int" },
+        "Necromancer": { "primary_ability": "Int" },
+        "Elf": {
+          "primary_ability": "Int",
+          "secondary_ability": "Str",
+          "conditions": [
+            {
+              "int_min": 16,
+              "str_min": 13,
+              "multiplier": 1.10
+            },
+            {
+              "int_min": 13,
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Halfling": {
+          "primary_ability": "Dex",
+          "secondary_ability": "Str",
+          "conditions": [
+            {
+              "dex_min": 13,
+              "str_min": 13,
+              "multiplier": 1.10
+            },
+            {
+              "dex_min": 13,
+              "multiplier": 1.05
+            },
+            {
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Barbarian": {
+          "primary_ability": "Str",
+          "secondary_ability": "Con",
+          "conditions": [
+            {
+              "con_min": 16,
+              "str_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "con_min": 13,
+              "multiplier": 1.05
+            },
+            {
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Drow": {
+          "primary_ability": "Str",
+          "secondary_ability": "Wis",
+          "conditions": [
+            {
+              "wis_min": 16,
+              "str_min": 13,
+              "multiplier": 1.10
+            },
+            {
+              "wis_min": 13,
+              "multiplier": 1.05
+            },
+            {
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Gnome": {
+          "primary_ability": "Dex",
+          "secondary_ability": "Int",
+          "conditions": [
+            {
+              "dex_min": 13,
+              "int_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "dex_min": 13,
+              "int_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "HalfElf": {
+          "primary_ability": "Int",
+          "secondary_ability": "Str",
+          "conditions": [
+            {
+              "int_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "str_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "int_min": 13,
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "HalfOrc": {
+          "primary_ability": "Dex",
+          "secondary_ability": "Str",
+          "conditions": [
+            {
+              "dex_min": 16,
+              "str_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "dex_min": 13,
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Paladin": {
+          "primary_ability": "Str",
+          "secondary_ability": "Wis",
+          "conditions": [
+            {
+              "wis_min": 16,
+              "str_min": 16,
+              "multiplier": 1.10
+            },
+            {
+              "wis_min": 13,
+              "multiplier": 1.05
+            },
+            {
+              "str_min": 13,
+              "multiplier": 1.05
+            }
+          ]
+        },
+        "Default": { "primary_ability": "Str" }
+      },
+      "SavingThrows": {
+        "Cleric": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 11,
+              "Wands": 12,
+              "ParalysisPetrify": 14,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 9,
+              "Wands": 10,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 9
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 3,
+              "Wands": 5,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 7
+            }
+          }
+        ],
+        "MagicUser": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "saves": {
+              "DeathPoison": 11,
+              "Wands": 12,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 11,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Thief": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 12,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Acrobat": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 12,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Assassin": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 12,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Bard": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 12,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Druid": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 11,
+              "Wands": 12,
+              "ParalysisPetrify": 14,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 9,
+              "Wands": 10,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 9
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 3,
+              "Wands": 5,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 7
+            }
+          }
+        ],
+        "HalfOrc": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "saves": {
+              "DeathPoison": 13,
+              "Wands": 14,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 16,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 12,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 7,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Dwarf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 7,
+              "SpellsRodsStaves": 8
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 2,
+              "Wands": 3,
+              "ParalysisPetrify": 4,
+              "BreathAttacks": 4,
+              "SpellsRodsStaves": 6
+            }
+          }
+        ],
+        "Halfling": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 7,
+              "SpellsRodsStaves": 8
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 2,
+              "Wands": 3,
+              "ParalysisPetrify": 4,
+              "BreathAttacks": 4,
+              "SpellsRodsStaves": 6
+            }
+          }
+        ],
+        "Duergar": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 7,
+              "SpellsRodsStaves": 8
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 2,
+              "Wands": 3,
+              "ParalysisPetrify": 4,
+              "BreathAttacks": 4,
+              "SpellsRodsStaves": 6
+            }
+          }
+        ],
+        "Elf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "HalfElf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 15
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Drow": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 13,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 11,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 9,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 8
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 10,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 6
+            }
+          }
+        ],
+        "Fighter": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 14,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 16
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 14
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 5,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Knight": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 14,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 16
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 14
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 5,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Ranger": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 12,
+              "Wands": 13,
+              "ParalysisPetrify": 14,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 16
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 14
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 5,
+              "SpellsRodsStaves": 8
+            }
+          }
+        ],
+        "Barbarian": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 13,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 15,
+              "SpellsRodsStaves": 16
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 11,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 13
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 9,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 10,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 7,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 7
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 3,
+              "Wands": 5,
+              "ParalysisPetrify": 4,
+              "BreathAttacks": 5,
+              "SpellsRodsStaves": 5
+            }
+          }
+        ],
+        "Gnome": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 11
+            }
+          },
+          {
+            "level_min": 6,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 9
+            }
+          }
+        ],
+        "Svirfneblin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 14,
+              "SpellsRodsStaves": 11
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 9
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 8,
+            "saves": {
+              "DeathPoison": 4,
+              "Wands": 5,
+              "ParalysisPetrify": 6,
+              "BreathAttacks": 9,
+              "SpellsRodsStaves": 7
+            }
+          }
+        ],
+        "Paladin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "saves": {
+              "DeathPoison": 10,
+              "Wands": 11,
+              "ParalysisPetrify": 12,
+              "BreathAttacks": 13,
+              "SpellsRodsStaves": 14
+            }
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "saves": {
+              "DeathPoison": 8,
+              "Wands": 9,
+              "ParalysisPetrify": 10,
+              "BreathAttacks": 11,
+              "SpellsRodsStaves": 12
+            }
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "saves": {
+              "DeathPoison": 6,
+              "Wands": 7,
+              "ParalysisPetrify": 8,
+              "BreathAttacks": 8,
+              "SpellsRodsStaves": 10
+            }
+          },
+          {
+            "level_min": 13,
+            "level_max": 14,
+            "saves": {
+              "DeathPoison": 2,
+              "Wands": 3,
+              "ParalysisPetrify": 4,
+              "BreathAttacks": 3,
+              "SpellsRodsStaves": 6
+            }
+          }
+        ],
+        "Default": []
+      },
+      "CombatToHitAC": {
+        "Cleric": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Thief": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Acrobat": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Assassin": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Bard": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Druid": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "HalfOrc": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 12
+          }
+        ],
+        "Dwarf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Elf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Fighter": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Halfling": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Barbarian": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Drow": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Duergar": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "HalfElf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Knight": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Paladin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Ranger": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "Svirfneblin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_ac0": 14
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_ac0": 12
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_ac0": 10
+          }
+        ],
+        "MagicUser": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_ac0": 14
+          }
+        ],
+        "Gnome": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_ac0": 14
+          }
+        ],
+        "Illusionist": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_ac0": 14
+          }
+        ],
+        "Necromancer": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_ac0": 19
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_ac0": 17
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_ac0": 14
+          }
+        ],
+        "Default": [
+          {
+            "level_min": 1,
+            "level_max": 99,
+            "to_hit_ac0": 19
+          }
+        ]
+      },
+      "CombatToHitACC": {
+        "Cleric": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Thief": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Acrobat": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Assassin": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Bard": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Druid": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "HalfOrc": [
+          {
+            "level_min": 1,
+            "level_max": 4,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 5,
+            "level_max": 8,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 9,
+            "level_max": 12,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 7
+          }
+        ],
+        "Dwarf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Elf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Fighter": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Halfling": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Barbarian": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Drow": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Duergar": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "HalfElf": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Knight": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Paladin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Ranger": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "Svirfneblin": [
+          {
+            "level_min": 1,
+            "level_max": 3,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 4,
+            "level_max": 6,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 7,
+            "level_max": 9,
+            "to_hit_acc0": 5
+          },
+          {
+            "level_min": 10,
+            "level_max": 12,
+            "to_hit_acc0": 7
+          },
+          {
+            "level_min": 13,
+            "level_max": 99,
+            "to_hit_acc0": 9
+          }
+        ],
+        "MagicUser": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_acc0": 5
+          }
+        ],
+        "Gnome": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_acc0": 5
+          }
+        ],
+        "Illusionist": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_acc0": 5
+          }
+        ],
+        "Necromancer": [
+          {
+            "level_min": 1,
+            "level_max": 5,
+            "to_hit_acc0": 0
+          },
+          {
+            "level_min": 6,
+            "level_max": 10,
+            "to_hit_acc0": 2
+          },
+          {
+            "level_min": 11,
+            "level_max": 99,
+            "to_hit_acc0": 5
+          }
+        ],
+        "Default": [
+          {
+            "level_min": 1,
+            "level_max": 99,
+            "to_hit_acc0": 0
+          }
+        ]
+      },
+      "SpellsPerLevel": {
+        "MagicUser": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 1, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 3, 3, 3, 2, 1 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 4, 4, 3, 3, 3, 2 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 3 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 4, 4, 3, 3 ]
+          }
+        ],
+        "Elf": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 1, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 3, 3, 3, 2, 1 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 4, 4, 3, 3, 3, 2 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 3 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 4, 4, 3, 3 ]
+          }
+        ],
+        "Illusionist": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 1, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 3, 3, 3, 2, 1 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 4, 4, 3, 3, 3, 2 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 3 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 4, 4, 3, 3 ]
+          }
+        ],
+        "Necromancer": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 1, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 3, 3, 3, 2, 1 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 4, 4, 3, 3, 3, 2 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 3 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 4, 4, 3, 3 ]
+          }
+        ],
+        "Gnome": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 1, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 3, 3, 3, 2, 1 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 4, 4, 3, 3, 3, 2 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 3 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 4, 4, 3, 3 ]
+          }
+        ],
+        "Drow": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 3, 2, 2, 1, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 3, 2, 2, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 4, 4, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 0 ]
+          }
+        ],
+        "Druid": [
+          {
+            "level": 1,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 1, 1, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 2, 1, 1, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 3, 2, 2, 1, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 3, 2, 2, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 4, 4, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 5, 5, 4, 4, 3, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 5, 5, 5, 4, 4, 0 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 6, 5, 5, 5, 4, 0 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 6, 6, 5, 5, 5, 0 ]
+          }
+        ],
+        "Cleric": [
+          {
+            "level": 1,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 1, 1, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 2, 2, 2, 1, 1, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 2, 2, 1, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 3, 2, 2, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 4, 4, 3, 3, 2, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 4, 4, 4, 3, 3, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 5, 5, 4, 4, 3, 0 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 5, 5, 5, 4, 4, 0 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 6, 5, 5, 5, 4, 0 ]
+          }
+        ],
+        "Bard": [
+          {
+            "level": 1,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 3, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 3, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 3, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 3, 3, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 3, 3, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 3, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 3, 3, 0, 0, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 3, 3, 3, 1, 0, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 3, 3, 3, 2, 0, 0 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 3, 3, 3, 3, 0, 0 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 4, 4, 3, 3, 0, 0 ]
+          }
+        ],
+        "HalfElf": [
+          {
+            "level": 1,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 3, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 3, 2, 2, 0, 0, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 3, 2, 2, 1, 0, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 3, 3, 2, 1, 0, 0 ]
+          }
+        ],
+        "Ranger": [
+          {
+            "level": 1,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 3, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 3, 2, 2, 0, 0, 0 ]
+          }
+        ],
+        "Paladin": [
+          {
+            "level": 1,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 2,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 3,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 4,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 5,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 6,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 7,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 8,
+            "spells_per_level": [ 0, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 9,
+            "spells_per_level": [ 1, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 10,
+            "spells_per_level": [ 2, 0, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 11,
+            "spells_per_level": [ 2, 1, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 12,
+            "spells_per_level": [ 2, 2, 0, 0, 0, 0 ]
+          },
+          {
+            "level": 13,
+            "spells_per_level": [ 2, 2, 1, 0, 0, 0 ]
+          },
+          {
+            "level": 14,
+            "spells_per_level": [ 3, 2, 1, 0, 0, 0 ]
+          }
+        ]
+      },
+      "TurningUndeadTablesByClass": {
+        "Cleric": {
+          "cleric_levels": [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11+" ],
+          "monster_hit_dice": [ "1", "2", "2*", "3", "4", "5", "6", "7-9" ],
+          "data": {
+            "1": {
+              "1": "7",
+              "2": "9",
+              "2*": "11",
+              "3": "-",
+              "4": "-",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "2": {
+              "1": "T",
+              "2": "7",
+              "2*": "9",
+              "3": "11",
+              "4": "-",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "3": {
+              "1": "T",
+              "2": "T",
+              "2*": "7",
+              "3": "9",
+              "4": "11",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "4": {
+              "1": "D",
+              "2": "T",
+              "2*": "T",
+              "3": "7",
+              "4": "9",
+              "5": "11",
+              "6": "-",
+              "7-9": "-"
+            },
+            "5": {
+              "1": "D",
+              "2": "D",
+              "2*": "T",
+              "3": "T",
+              "4": "7",
+              "5": "9",
+              "6": "11",
+              "7-9": "-"
+            },
+            "6": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "T",
+              "4": "T",
+              "5": "7",
+              "6": "9",
+              "7-9": "11"
+            },
+            "7": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "T",
+              "5": "T",
+              "6": "7",
+              "7-9": "9"
+            },
+            "8": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "T",
+              "6": "T",
+              "7-9": "7"
+            },
+            "9": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "T",
+              "7-9": "T"
+            },
+            "10": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "D",
+              "7-9": "T"
+            },
+            "11+": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "D",
+              "7-9": "D"
+            }
+          }
+        },
+        "Paladin": {
+          "cleric_levels": [ "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13+" ],
+          "monster_hit_dice": [ "1", "2", "2*", "3", "4", "5", "6", "7-9" ],
+          "data": {
+            "3": {
+              "1": "7",
+              "2": "9",
+              "2*": "11",
+              "3": "-",
+              "4": "-",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "4": {
+              "1": "T",
+              "2": "7",
+              "2*": "9",
+              "3": "11",
+              "4": "-",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "5": {
+              "1": "T",
+              "2": "T",
+              "2*": "7",
+              "3": "9",
+              "4": "11",
+              "5": "-",
+              "6": "-",
+              "7-9": "-"
+            },
+            "6": {
+              "1": "D",
+              "2": "T",
+              "2*": "T",
+              "3": "7",
+              "4": "9",
+              "5": "11",
+              "6": "-",
+              "7-9": "-"
+            },
+            "7": {
+              "1": "D",
+              "2": "D",
+              "2*": "T",
+              "3": "T",
+              "4": "7",
+              "5": "9",
+              "6": "11",
+              "7-9": "-"
+            },
+            "8": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "T",
+              "4": "T",
+              "5": "7",
+              "6": "9",
+              "7-9": "11"
+            },
+            "9": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "T",
+              "5": "T",
+              "6": "7",
+              "7-9": "9"
+            },
+            "10": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "T",
+              "6": "T",
+              "7-9": "7"
+            },
+            "11": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "T",
+              "7-9": "T"
+            },
+            "12": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "D",
+              "7-9": "T"
+            },
+            "13+": {
+              "1": "D",
+              "2": "D",
+              "2*": "D",
+              "3": "D",
+              "4": "D",
+              "5": "D",
+              "6": "D",
+              "7-9": "D"
+            }
+          }
+        }
+      }
+    },
+    "CoinConversionRates": {
+      "Gold": { "to_gold_rate": 1 },
+      "Platinum": { "to_gold_rate": 5 },
+      "Electrum": { "to_gold_rate": 2 },
+      "Silver": { "to_gold_rate": 0.1 },
+      "Copper": { "to_gold_rate": 0.01 }
+    }
+  }
+}
