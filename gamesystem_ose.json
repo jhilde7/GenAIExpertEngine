@@ -1,6 +1,103 @@
 {
   "GameSystemName": "Old-School Essentials (OSE)",
   "Version": "1.0",
+  "Enums": {
+    "MagicType": [
+      "None", // No magic
+      "Arcane", // Arcane magic (e.g., magic-user, illusionist)
+      "Divine" // Divine magic (e.g., clerics, paladins)
+    ],
+    "AbilityType": [
+      "Str",
+      "Dex",
+      "Con",
+      "Int",
+      "Wis",
+      "Cha"
+    ],
+    "Alignment": [
+      "Lawful",
+      "Chaotic",
+      "Neutral"
+    ],
+    "Languages": [
+      "Common",
+      "Alignment",
+      "Bugbear",
+      "Doppelgänger",
+      "Dragon",
+      "Dwarvish",
+      "Elvish",
+      "Gargoyle",
+      "Gnoll",
+      "Gnomish",
+      "Goblin",
+      "Halfling",
+      "Harpy",
+      "Hobgoblin",
+      "Kobold",
+      "LizardMan",
+      "Medusa",
+      "Minotaur",
+      "Ogre",
+      "Orcish",
+      "Pixie",
+      "HumanDialect",
+      "Deepcommon",
+      "SecretSpider",
+      "SecretBurrowingMammals",
+      "SecretEarthElemental"
+    ],
+    "CharacterClass": [
+      "Cleric",
+      "Dwarf",
+      "Elf",
+      "Fighter",
+      "Halfling",
+      "MagicUser",
+      "Thief",
+      "Acrobat",
+      "Assassin",
+      "Barbarian",
+      "Bard",
+      "Drow",
+      "Druid",
+      "Duergar",
+      "Gnome",
+      "HalfElf",
+      "HalfOrc",
+      "Illusionist",
+      "Knight",
+      "Paladin",
+      "Ranger",
+      "Svirfneblin",
+      "Necromancer"
+    ],
+    "CharacterRace": [
+      "Dwarf",
+      "Elf",
+      "Human",
+      "Halfling",
+      "Drow",
+      "Duergar",
+      "Gnome",
+      "HalfElf",
+      "HalfOrc",
+      "Svirfneblin"
+    ],
+    "ArmourType": [
+      "None", // No armour
+      "Light", // Light armour (e.g., leather)
+      "Heavy" // Heavy armour (e.g., chainmail, plate mail)
+    ],
+    "CoinType": [
+      "Gold",
+      "Platinum",
+      "Electrum",
+      "Silver",
+      "Copper"
+    ]
+  }
   "Rules": {
     "AbilityScoreModifiers": [
       {
