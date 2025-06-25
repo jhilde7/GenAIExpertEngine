@@ -1,32 +1,56 @@
 ﻿using System.Collections.Concurrent;
 using System.ComponentModel;
 using CSharpToJsonSchema;
+using GenAIExpertEngineAPI.Classes;
 
 namespace GenAIExpertEngineAPI.Services
 {
     [GenerateJsonSchema(GoogleFunctionTool = true, Strict = false)]
     public interface ICharacterStateManager
     {
+        //-- ENUM SECTION --
+        [Description("Retrieve a list of all classes available in the game system.")]
+        Task<string> GetAllCharacterClassesAsync( CancellationToken cancellationToken = default);
+
+        [Description("Retrieve a list of all races available in the game system.")]
+        Task<string> GetAllRacesAsync( CancellationToken cancellationToken = default);
+
+        [Description("Retrieve a list of all ability scores available in the game system.")]
+        Task<string> GetAllAbilityTypesAsync( CancellationToken cancellationToken = default);
+
+        [Description("Retrieve a list of all languages available in the game system.")]
+        Task<string> GetAllLanguagesAsync( CancellationToken cancellationToken = default);
+
+        [Description("Retrieve a list of all coin types available in the game system.")]
+        Task<string> GetAllCoinTypesAsync( CancellationToken cancellationToken = default);
+
+        [Description("Retrieves a list of all magic types available in the game system")]
+        Task<string> GetAllMagicTypesAsync(CancellationToken cancellationToken = default);
+
+        [Description("Retrieves a list of all spell types available in the game system")]
+        Task<string> GetAllSpellTypesAsync(CancellationToken cancellationToken = default);
+        //--END ENUM SECTION --
+
         [Description("Updates a character's ability scores.")]
         Task<string> UpdateAbilityScoresAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("A dictionary of ability types (e.g., Strength, Dexterity) and their corresponding scores.")] Dictionary<AbilityType, AbilityScore> scores, CancellationToken cancellationToken = default);
+            [Description("A dictionary of ability types (e.g., Strength, Dexterity) and their corresponding scores.")] Dictionary<string, int> scores, CancellationToken cancellationToken = default);
 
         [Description("Updates the character's specified ability score.")]
         Task<string> UpdateAbilityScoreAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The type of ability score to update (e.g., Strength, Intelligence).")] AbilityType abilityType,
+            [Description("The type of ability score to update (e.g., Strength, Intelligence).")] string abilityType,
             [Description("The new integer value for the ability score.")] int value, CancellationToken cancellationToken = default);
 
         [Description("Updates a character's class.")]
         Task<string> UpdateCharacterClassAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The new class name for the character (e.g., Fighter, MagicUser).")] CharacterClass className, CancellationToken cancellationToken = default);
+            [Description("The new class name for the character (e.g., Fighter, MagicUser).")] string className, CancellationToken cancellationToken = default);
 
         [Description("Updates a character's race.")]
         Task<string> UpdateRaceAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The new race name for the character (e.g., Human, Elf).")] CharacterRace raceName, CancellationToken cancellationToken = default);
+            [Description("The new race name for the character (e.g., Human, Elf).")] string raceName, CancellationToken cancellationToken = default);
 
         [Description("Updates a character's name.")]
         Task<string> UpdateCharacterNameAsync(
@@ -36,7 +60,7 @@ namespace GenAIExpertEngineAPI.Services
         [Description("Updates a character's alignment.")]
         Task<string> UpdateCharacterAlignmentAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The new alignment for the character (e.g., Lawful, Neutral, Chaotic).")] Alignment alignment, CancellationToken cancellationToken = default);
+            [Description("The new alignment for the character (e.g., Lawful, Neutral, Chaotic).")] string alignment, CancellationToken cancellationToken = default);
 
         [Description("Adds designated experience to the character.")]
         Task<string> UpdateCharacterExperienceAsync(
@@ -46,7 +70,7 @@ namespace GenAIExpertEngineAPI.Services
         [Description("Adds an additional language to the character's known languages. A random language is selected if not specified.")]
         Task<string> AddAdditionalLanguageAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The specific language to add (e.g., Elvish, Dwarvish). Defaults to Common if not specified.")] Languages languages = Languages.Common, CancellationToken cancellationToken = default);
+            [Description("The specific language to add (e.g., Elvish, Dwarvish). Defaults to Common if not specified.")] string languages = "Common", CancellationToken cancellationToken = default);
 
         [Description("Retrieves the character state as a summarized string.")]
         Task<string> GetCharacterStateAsStringAsync(
@@ -67,7 +91,7 @@ namespace GenAIExpertEngineAPI.Services
         [Description("Retrieves the value of a specific ability score for a character.")]
         Task<string> GetAbilityScoreValueAsync(
             [Description("The unique identifier for the conversation or character session.")] string conversationId,
-            [Description("The type of ability score to retrieve (e.g., Strength, Wisdom).")] AbilityType abilityType, CancellationToken cancellationToken = default);
+            [Description("The type of ability score to retrieve (e.g., Strength, Wisdom).")] string abilityType, CancellationToken cancellationToken = default);
 
         [Description("Retrieves all ability scores for a character.")]
         Task<string> GetAbilityScoresAsync(
@@ -124,15 +148,86 @@ namespace GenAIExpertEngineAPI.Services
         }
 
         /// <summary>
+        /// Retrievs all classes available in the game system.
+        /// </summary>
+        public Task<string> GetAllCharacterClassesAsync(CancellationToken cancellationToken = default)
+        {
+            var classes = _gameSystemRegistry.GetAllCharacterClasses();
+            _logger.LogInformation($"Retrieved all classes: {string.Join(", ", classes)}");
+            return Task.FromResult(string.Join(", ", classes));
+        }
+
+        /// <summary>
+        /// Retrieve a list of all races available in the game system.
+        /// </summary>
+        public Task<string> GetAllRacesAsync(CancellationToken cancellationToken = default)
+        {
+            var races = _gameSystemRegistry.GetAllRaces();
+            _logger.LogInformation($"Retrieved all races: {string.Join(", ", races)}");
+            return Task.FromResult(string.Join(", ", races));
+        }
+
+        /// <summary>
+        /// Retrieve a list of all ability scores available in the game system.
+        /// </summary>
+        public Task<string> GetAllAbilityTypesAsync(CancellationToken cancellationToken = default)
+        {
+            var abilityScores = _gameSystemRegistry.GetAllAbilityTypes();
+            _logger.LogInformation($"Retrieved all ability scores: {string.Join(", ", abilityScores)}");
+            return Task.FromResult(string.Join(", ", abilityScores));
+        }
+
+        /// <summary>
+        /// Retrieve a list of all additional languages available in the game system.
+        /// </summary>
+        public Task<string> GetAllLanguagesAsync(CancellationToken cancellationToken = default)
+        {
+            var additionalLanguages = _gameSystemRegistry.GetAllLanguages();
+            _logger.LogInformation($"Retrieved all additional languages: {string.Join(", ", additionalLanguages)}");
+            return Task.FromResult(string.Join(", ", additionalLanguages));
+        }
+
+        /// <summary>
+        /// [Description("Retrieves a list of all magic types available in the game system")]
+        /// </summary>
+        public Task<string> GetAllMagicTypesAsync(CancellationToken cancellationToken = default)
+        {
+            var magicTypes = _gameSystemRegistry.GetAllMagicTypes();
+            _logger.LogInformation($"Retrieved all magic types: {string.Join(", ", magicTypes)}");
+            return Task.FromResult(string.Join(", ", magicTypes));
+        }
+
+        /// <summary>
+        /// [Description("Retrieves a list of all spell types available in the game system")]
+        /// </summary>
+        public Task<string> GetAllSpellTypesAsync(CancellationToken cancellationToken = default)
+        {
+            var spellTypes = _gameSystemRegistry.GetAllSpellTypes();
+            _logger.LogInformation($"Retrieved all spell types: {string.Join(", ", spellTypes)}");
+            return Task.FromResult(string.Join(", ", spellTypes));
+        }
+
+        /// <summary>
+        /// Retrieve a list of all coin types available in the game system.
+        /// </summary>
+        public Task<string> GetAllCoinTypesAsync(CancellationToken cancellationToken = default)
+        {
+            var coinTypes = _gameSystemRegistry.GetAllCoinTypes();
+            _logger.LogInformation($"Retrieved all coin types: {string.Join(", ", coinTypes)}");
+            return Task.FromResult(string.Join(", ", coinTypes));
+        }
+
+
+        /// <summary>
         /// Updates a character's ability scores.
         /// </summary>
-        public Task<string> UpdateAbilityScoresAsync(string conversationId, Dictionary<AbilityType, AbilityScore> scores, CancellationToken cancellationToken = default)
+        public Task<string> UpdateAbilityScoresAsync(string conversationId, Dictionary<string, int> scores, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             foreach (var kvp in scores)
             {
-                state.SetAbilityScore(kvp.Key, kvp.Value.Value);
-                _logger.LogInformation($"Updated {kvp.Key} score for {conversationId} to {kvp.Value.Value}.");
+                state.SetAbilityScore(kvp.Key, kvp.Value);
+                _logger.LogInformation($"Updated {kvp.Key} score for {conversationId} to {kvp.Value}.");
             }
             return Task.FromResult(state.ToString());
         }
@@ -140,7 +235,7 @@ namespace GenAIExpertEngineAPI.Services
         /// <summary>
         /// Updates the character's specified ability score.
         /// </summary>
-        public Task<string> UpdateAbilityScoreAsync(string conversationId, AbilityType abilityType, int value, CancellationToken cancellationToken = default)
+        public Task<string> UpdateAbilityScoreAsync(string conversationId, string abilityType, int value, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             state.SetAbilityScore(abilityType, value);
@@ -151,7 +246,7 @@ namespace GenAIExpertEngineAPI.Services
         /// <summary>
         /// Updates a character's class.
         /// </summary>
-        public Task<string> UpdateCharacterClassAsync(string conversationId, CharacterClass className, CancellationToken cancellationToken = default)
+        public Task<string> UpdateCharacterClassAsync(string conversationId, string className, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             state.SetCharacterClass(className);
@@ -162,7 +257,7 @@ namespace GenAIExpertEngineAPI.Services
         /// <summary>
         /// Updates a character's race.
         /// </summary>
-        public Task<string> UpdateRaceAsync(string conversationId, CharacterRace raceName, CancellationToken cancellationToken = default)
+        public Task<string> UpdateRaceAsync(string conversationId, string raceName, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             state.SetCharacterRace(raceName);
@@ -184,7 +279,7 @@ namespace GenAIExpertEngineAPI.Services
         /// <summary>
         /// Updates a character's alignment.
         /// </summary>
-        public Task<string> UpdateCharacterAlignmentAsync(string conversationId, Alignment alignment, CancellationToken cancellationToken = default)
+        public Task<string> UpdateCharacterAlignmentAsync(string conversationId, string alignment, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             state.SetAlignment(alignment);
@@ -207,7 +302,7 @@ namespace GenAIExpertEngineAPI.Services
         /// Adds an additional language to the character's known languages based on available additional languages.
         /// You can pass a language or use the default which will trigger a random selection
         /// </summary>
-        public Task<string> AddAdditionalLanguageAsync(string conversationId, Languages languages = Languages.Common, CancellationToken cancellationToken = default)
+        public Task<string> AddAdditionalLanguageAsync(string conversationId, string languages = "Common", CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
             state.SetAdditionalLanguage(languages);
@@ -261,10 +356,10 @@ namespace GenAIExpertEngineAPI.Services
         /// <summary>
         /// Retrieves the value of a specific ability score for a character.
         /// </summary>
-        public Task<string> GetAbilityScoreValueAsync(string conversationId, AbilityType abilityType, CancellationToken cancellationToken = default)
+        public Task<string> GetAbilityScoreValueAsync(string conversationId, string abilityType, CancellationToken cancellationToken = default)
         {
             var state = GetCharacterState(conversationId);
-            int value = state.GetAbilityScore(abilityType);
+            int value = state.GetAbilityScoreValue(abilityType);
             _logger.LogInformation($"Retrieved {abilityType} score: {value} for {conversationId}");
             return Task.FromResult(value.ToString());
         }
@@ -276,10 +371,8 @@ namespace GenAIExpertEngineAPI.Services
         {
             var state = GetCharacterState(conversationId);
             var scores = state.GetAbilityScores();
-            _logger.LogInformation($"Retrieved ability scores for {conversationId}: {string.Join(", ", scores.Select(kvp => $"{kvp.Key}: {kvp.Value.Value}"))}");
-            //convert dictionary to string
-            string scoresString = string.Join(", ", scores.Select(kvp => $"{kvp.Key}: {kvp.Value.Value}\n"));
-            return Task.FromResult(scoresString);
+            scores.ForEach(kvp => _logger.LogInformation($"Retrieved {kvp.Name} score: {kvp.Value} ({kvp.Modifier}) for {conversationId}"));
+            return Task.FromResult(string.Join(", ", scores.Select(kvp => $"{kvp.Name}: {kvp.Value} ({kvp.Modifier})")));
         }
 
         /// <summary>
