@@ -92,7 +92,7 @@
       "Druid",
       "Illusionist",
       "Necromancer"
-    ]
+    ],
     "ArmourType": [
       "None", // No armour
       "Light", // Light armour (e.g., leather)
@@ -105,7 +105,7 @@
       "Silver",
       "Copper"
     ]
-  }
+  },
   "Rules": {
     "AbilityScoreModifiers": [
       {
@@ -7945,7 +7945,7 @@
         "Range": "60′",
         "Reverse": "Eternal Quest",
         "Description": "This spell dispels an active eternal quest spell and any incurred penalties.\nAutomatic dispelling: An eternal quest placed by a lower level caster is automatically dispelled.\nChance of success: An eternal quest created by a higher level caster has a 5% chance per level difference of not being dispelled."
-      }
+      },
       {
         "Name": "Necrotic Gaze",
         "Level": 6,
