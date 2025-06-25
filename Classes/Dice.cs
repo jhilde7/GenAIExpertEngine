@@ -1,4 +1,4 @@
-﻿namespace GenAIExpertEngineAPI
+﻿namespace GenAIExpertEngineAPI.Classes
 {
     public static class Dice
     {

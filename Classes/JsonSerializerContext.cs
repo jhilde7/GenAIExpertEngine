@@ -24,10 +24,9 @@ namespace GenAIExpertEngineAPI
     [JsonSerializable(typeof(ParameterInfo))]
     [JsonSerializable(typeof(Part))]
     [JsonSerializable(typeof(CharacterState))]
-    [JsonSerializable(typeof(AbilityType))]
-    [JsonSerializable(typeof(CharacterClass))]
-    [JsonSerializable(typeof(CharacterRace))]
-    [JsonSerializable(typeof(Dictionary<AbilityType, AbilityScore>))]
+    [JsonSerializable(typeof(Spell))]
+    [JsonSerializable(typeof(Monster))]
+
 
     public partial class ApplicationJsonSerializerContext : JsonSerializerContext
     {

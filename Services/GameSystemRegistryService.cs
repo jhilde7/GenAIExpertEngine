@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Data;
+using System.Text.Json.Serialization;
 
 namespace GenAIExpertEngineAPI.Services
 {
@@ -15,6 +16,51 @@ namespace GenAIExpertEngineAPI.Services
         public GameSystemConfiguration GetGameSystemData()
         {
             return _gameSystemData;
+        }
+
+        public List<string> GetAllAbilityTypes()
+        {
+            return _gameSystemData.Enums.AbilityTypes; // Return the list of ability types
+        }
+
+        public List<string> GetAllAlignments()
+        {
+            return _gameSystemData.Enums.Alignments; // Return the list of alignments
+        }
+
+        public List<string> GetAllLanguages()
+        {
+            return _gameSystemData.Enums.Languages; // Return the list of languages
+        }
+
+        public List<string> GetAllCharacterClasses()
+        {
+            return _gameSystemData.Enums.CharacterClasses; // Return the list of character classes
+        }
+
+        public List<string> GetAllRaces() //
+        {
+            return _gameSystemData.Enums.CharacterRaces;
+        }
+
+        public List<string> GetAllMagicTypes()
+        {
+            return _gameSystemData.Enums.MagicTypes; // Return the list of magic types
+        }
+
+        public List<string> GetAllSpellTypes()
+        {
+            return _gameSystemData.Enums.SpellTypes; // Return the list of spell types
+        }
+
+        public List<string> GetAllArmourTypes()
+        {
+            return _gameSystemData.Enums.ArmourTypes; // Return the list of armour types
+        }
+
+        public List<string> GetAllCoinTypes()
+        {
+            return _gameSystemData.Enums.CoinTypes; // Return the list of coin types
         }
 
         public int GetAbilityScoreModifier(int score)
@@ -208,6 +254,37 @@ namespace GenAIExpertEngineAPI.Services
             return new int[] { 0, 0, 0, 0, 0, 0 }; // Return default or throw
         }
 
+        public string GetMagicType(string className)
+        {
+            if(_gameSystemData.Rules.MagicTypeByClass.TryGetValue(className, out var magicType))
+            {
+                return magicType;
+            }
+            return "None"; // Default magic type if class not found
+        }
+
+        public string GetSpellType(string className)
+        {
+            if (_gameSystemData.Rules.SpellTypeByClass.TryGetValue(className, out var spellType))
+            {
+                return spellType; // Return the spell type for the class
+            }
+            return "None"; // Default spell type if class not found
+        }
+
+        public List<string> GetSpellList(string className, int spellLevel)
+        {
+            if (_gameSystemData.Rules.SpellLists.TryGetValue(className, out var spellLevels))
+            {
+                if (spellLevels.TryGetValue(spellLevel, out var spells))
+                {
+                    return spells; // Return the list of spells for the specified class and level
+                }
+            }
+            // Fallback if needed, e.g., a "Default" entry
+            return new List<string>(); // Return empty list or throw if no rule found
+        }
+
         public SavingThrowValues GetSavingThrows(string characterClass, int level)
         {
             if (_gameSystemData.Rules.SavingThrowsByClassAndLevel.TryGetValue(characterClass, out var saveRules))
@@ -220,15 +297,6 @@ namespace GenAIExpertEngineAPI.Services
             }
             // Fallback if needed, e.g., a "Default" entry
             return new SavingThrowValues(); // Return default or throw
-        }
-
-        public float GetCoinConversionRate(string coinType)
-        {
-            if (_gameSystemData.Rules.CoinConversionRates.TryGetValue(coinType, out var conversionRate))
-            {
-                return conversionRate; // Return the conversion rate for the coin type
-            }
-            return 1.0f; // Default conversion rate if not found (e.g., 1:1 for gold)
         }
 
         public string GetTurningResult(string className, int level, string monsterHD)
@@ -254,6 +322,14 @@ namespace GenAIExpertEngineAPI.Services
             return "-"; // Default to failure if entry not found
         }
 
+        public float GetCoinConversionRate(string coinType)
+        {
+            if (_gameSystemData.Rules.CoinConversionRates.TryGetValue(coinType, out var conversionRate))
+            {
+                return conversionRate; // Return the conversion rate for the coin type
+            }
+            return 1.0f; // Default conversion rate if not found (e.g., 1:1 for gold)
+        }
     }
 
     public class GameSystemConfiguration
@@ -261,6 +337,73 @@ namespace GenAIExpertEngineAPI.Services
         public string GameSystemName { get; set; } = string.Empty;
         public string Version { get; set; } = string.Empty;
         public GameSystemRules Rules { get; set; } = new GameSystemRules();
+        public GameSystemEnums Enums { get; set; } = new GameSystemEnums();
+        public GameSystemSpells Spells { get; set; } = new GameSystemSpells();
+        public GameSystemMonsters Monsters { get; set; } = new GameSystemMonsters();
+    }
+
+    public class GameSystemEnums
+    {
+        [JsonPropertyName("AbilityType")]
+        public List<string> AbilityTypes { get; set; } = new List<string>();
+
+        [JsonPropertyName("Alignment")]
+        public List<string> Alignments { get; set; } = new List<string>();
+
+        [JsonPropertyName("Languages")]
+        public List<string> Languages { get; set; } = new List<string>();
+
+        [JsonPropertyName("CharacterClass")]
+        public List<string> CharacterClasses { get; set; } = new List<string>();
+
+        [JsonPropertyName("CharacterRace")]
+        public List<string> CharacterRaces { get; set; } = new List<string>();
+
+        [JsonPropertyName("MagicType")]
+        public List<string> MagicTypes { get; set; } = new List<string>();
+
+        [JsonPropertyName("SpellType")]
+        public List<string> SpellTypes { get; set; } = new List<string>();
+
+        [JsonPropertyName("ArmourType")]
+        public List<string> ArmourTypes { get; set; } = new List<string>();
+
+        [JsonPropertyName("CoinType")]
+        public List<string> CoinTypes { get; set; } = new List<string>();
+
+        // Add methods for quick lookup (e.g., using HashSets for O(1) average lookup)
+        private Dictionary<string, HashSet<string>> _enumValueSets = new Dictionary<string, HashSet<string>>();
+
+        public void InitializeLookupSets()
+        {
+            _enumValueSets["AbilityType"] = new HashSet<string>(AbilityTypes, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["Alignment"] = new HashSet<string>(Alignments, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["Languages"] = new HashSet<string>(Languages, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["CharacterClass"] = new HashSet<string>(CharacterClasses, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["CharacterRace"] = new HashSet<string>(CharacterRaces, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["MagicType"] = new HashSet<string>(MagicTypes, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["SpellType"] = new HashSet<string>(SpellTypes, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["ArmourType"] = new HashSet<string>(ArmourTypes, StringComparer.OrdinalIgnoreCase);
+            _enumValueSets["CoinType"] = new HashSet<string>(CoinTypes, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public bool IsValidEnumValue(string enumTypeName, string value)
+        {
+            if (_enumValueSets.TryGetValue(enumTypeName, out var validValues))
+            {
+                return validValues.Contains(value);
+            }
+            return false; // Unknown enum type
+        }
+
+        public List<string> GetValidValues(string enumTypeName)
+        {
+            if (_enumValueSets.TryGetValue(enumTypeName, out var validValues))
+            {
+                return validValues.ToList(); // Return a copy of the list
+            }
+            return new List<string>(); // Unknown enum type
+        }
     }
 
     public class GameSystemRules
@@ -281,12 +424,24 @@ namespace GenAIExpertEngineAPI.Services
         public Dictionary<string, List<CombatToHitAC>> CombatToHitACByClass { get; set; } = new Dictionary<string, List<CombatToHitAC>>(); // Maps class names to combat to-hit rules
         public Dictionary<string, List<CombatToHitACC>> CombatToHitACCByClass { get; set; } = new Dictionary<string, List<CombatToHitACC>>(); // Maps class names to combat to-hit rules for ascending AC
         public Dictionary<string, List<string>> StartingLanguagesByClass { get; set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, string> MagicTypeByClass { get; set; } = new Dictionary<string, string>(); // Maps class names to magic types (e.g., Arcane, Divine)
+        public Dictionary<string, string> SpellTypeByClass { get; set; } = new Dictionary<string, string>(); // Maps class names to spell types
         public Dictionary<string, List<SpellsPerLevel>> SpellsPerLevelByClass { get; set; } = new Dictionary<string, List<SpellsPerLevel>>(); // Maps class names to spells per level
+        public Dictionary<string, Dictionary<int, List<string>>> SpellLists { get; set; } = new Dictionary<string, Dictionary<int, List<string>>>();
         public Dictionary<string, List<SavingThrowRule>> SavingThrowsByClassAndLevel { get; set; } = new Dictionary<string, List<SavingThrowRule>>();
         public Dictionary<string, float> CoinConversionRates { get; set; } = new Dictionary<string, float>(); // Maps coin types to conversion rates to gold
         public ClassTurningTable ClassTurningTable { get; set; } = new ClassTurningTable(); // Turning table for clerics and paladins
-
     }
+
+    public class GameSystemSpells
+    {
+        public Dictionary<string, List<Spell>> SpellsByClass { get; set; } = new Dictionary<string, List<Spell>>();
+    }
+
+    public class GameSystemMonsters
+    {
+        public Dictionary<string, Monster> Monsters { get; set; } = new Dictionary<string, Monster>();
+    }    
 
     public class MaxRetainersByCharisma
     {
