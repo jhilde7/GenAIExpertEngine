@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using GenAIExpertEngineAPI.Classes;
+using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GenAIExpertEngineAPI.Services
 {
@@ -8,46 +11,31 @@ namespace GenAIExpertEngineAPI.Services
         private readonly GameSystemRegistryService _gameSystemRegistry;
         private int additionalLanguages = 0; // Default value for additional languages
         public PersonalityBackground? personalityBackground { get; set; } = new PersonalityBackground();
-        public CharacterClass CharacterClass { get; set; }
-        public Alignment Alignment { get; set; }
-        public CharacterRace? Race { get; set; }   
+        public string CharacterClass { get; set; } = string.Empty; 
+        public string Alignment { get; set; } = string.Empty;
+        public string? Race { get; set; }   
         public string CharacterName { get; set; } = string.Empty;
-        public List<Languages> KnownLanguages { get; set; } = new List<Languages>();
-        public Dictionary<AbilityType, AbilityScore> AbilityScores { get; set; }
+        public List<string> KnownLanguages { get; set; } = new List<string>();
+        public List<AbilityScore> AbilityScores { get; set; } = new List<AbilityScore>();
         public ExperienceState? Experience { get; set; }
         public HealthState? Health { get; set; }
         public SavingThrows? SavingThrows { get; set; }
         public CombatState? Combat { get; set; }
         public Spells? Spells { get; set; }
         public WealthState? Wealth { get; set; }
-        public string Literacy => GetLiteracy(); // Property to get literacy based on Intelligence score
-        public int AdditionalLanguages => GetAdditionalLanguages(); // Property to get additional languages based on Intelligence score
-        public int MaxRetainers => GetMaxRetainers(); // Property to get max retainers based on Charisma score
-        public int RetainerLoyalty => GetRetainerLoyalty(); // Property to get retainer loyalty based on Charisma score
-        public int NpcReactionBonus => GetNpcReactionBonus(); // Property to get NPC reaction bonus based on Charisma score
-        public string OpenDoorChance => GetOpenDoorChance(); // Property to get open door chance based on Strength score
 
         public CharacterState(GameSystemRegistryService gameSystemRegistry)
         {
             _gameSystemRegistry = gameSystemRegistry;
-            AbilityScores = new Dictionary<AbilityType, AbilityScore>
-            {
-                { AbilityType.Str, new AbilityScore(9, gameSystemRegistry) },
-                { AbilityType.Dex, new AbilityScore(9, gameSystemRegistry) },
-                { AbilityType.Con, new AbilityScore(9, gameSystemRegistry) },
-                { AbilityType.Int, new AbilityScore(9, gameSystemRegistry) },
-                { AbilityType.Wis, new AbilityScore(9, gameSystemRegistry) },
-                { AbilityType.Cha, new AbilityScore(9, gameSystemRegistry) }
-            };
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder("Current Character State:\n");
             sb.AppendLine($"  Name: {CharacterName}");
-            if (Race.HasValue) // Updated null check to use nullable type  
+            if (!string.IsNullOrEmpty(Race)) // Updated null check to use nullable type  
             {
-                sb.AppendLine($"  Race: {Race.Value}");
+                sb.AppendLine($"  Race: {Race}");
             }
             sb.AppendLine($"  Alignment: {Alignment}");
             sb.AppendLine($"  Class: {CharacterClass}");
@@ -62,9 +50,9 @@ namespace GenAIExpertEngineAPI.Services
             if (AbilityScores.Any())
             {
                 sb.AppendLine("  Ability Scores:");
-                foreach (KeyValuePair<AbilityType, AbilityScore> score in AbilityScores)
+                foreach (AbilityScore score in AbilityScores)
                 {
-                    sb.AppendLine($"    {score.Key}: {score.Value.Value} ({score.Value.Modifier})");
+                    sb.AppendLine($"    {score.Name}: {score.Value} ({score.Modifier})");
                 }
             }
             else
@@ -106,7 +94,7 @@ namespace GenAIExpertEngineAPI.Services
             {
                 sb.AppendLine("  CombatState is not Initialized");
             }
-            if (Spells != null && Spells.Level1 > 0) // Added null check for Spells
+            if (Spells != null && Spells.Level1Max > 0) // Added null check for Spells
             {
                 sb.AppendLine($"  Spells: {Spells.ToString()}");
             }
@@ -147,7 +135,7 @@ namespace GenAIExpertEngineAPI.Services
             {
                 WriteIndented = true,
                 // Ignore cycles and allow serialization of fields/properties that may be null
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             return JsonSerializer.Serialize(this, options);
         }
@@ -162,9 +150,9 @@ namespace GenAIExpertEngineAPI.Services
             Wealth = new WealthState(_gameSystemRegistry);
         }
 
-        public CharacterClass GetCharacterClass()
+        public string GetCharacterClass()
         {
-            return CharacterClass;
+            return CharacterClass.ToString();
         }
 
         public string GetCharacterRace()
@@ -172,51 +160,61 @@ namespace GenAIExpertEngineAPI.Services
             return Race?.ToString() ?? string.Empty;
         }
 
-        public Dictionary<AbilityType, AbilityScore> GetAbilityScores()
+        public List<AbilityScore> GetAbilityScores()
         {
             return AbilityScores;
         }
 
-        public int GetAbilityScore(AbilityType ability)
+        public int GetAbilityScoreValue(string ability)
         {
-            if (AbilityScores.ContainsKey(ability))
+            List<string> abilityTypes = _gameSystemRegistry.GetAllAbilityTypes();
+            if (!abilityTypes.Contains(ability, StringComparer.OrdinalIgnoreCase))
             {
-                return AbilityScores[ability].Value;
+                throw new ArgumentException($"Invalid ability type: {ability}. Valid types are: {string.Join(", ", abilityTypes)}");
             }
-            else
-            {
-                throw new ArgumentException($"Ability type {ability} does not exist in the character state.");
-            }
-        }
 
+            return AbilityScores.FirstOrDefault(x => x.Name.Equals(ability, StringComparison.OrdinalIgnoreCase))?.Value ?? 0;
+        }
+        
+        public AbilityScore GetAbilityScore(string ability)
+        {
+            List<string> abilityTypes = _gameSystemRegistry.GetAllAbilityTypes();
+            if (!abilityTypes.Contains(ability, StringComparer.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"Invalid ability type: {ability}. Valid types are: {string.Join(", ", abilityTypes)}");
+            }
+            return AbilityScores.FirstOrDefault(x => x.Name.Equals(ability, StringComparison.OrdinalIgnoreCase)) ??
+                   throw new ArgumentException($"Ability score for {ability} not found.");
+        }
+        
         public string GetLiteracy()
         {
-            return _gameSystemRegistry.GetLiteracyByIntelligence(GetAbilityScore(AbilityType.Int));
+            return _gameSystemRegistry.GetLiteracyByIntelligence(GetAbilityScoreValue("Int"));
         }
 
         public int GetAdditionalLanguages()
         {
-            return _gameSystemRegistry.GetAdditionalLanguagesByIntelligence(GetAbilityScore(AbilityType.Int));
+            return _gameSystemRegistry.GetAdditionalLanguagesByIntelligence(GetAbilityScoreValue("Int"));
         }
 
         public int GetMaxRetainers()
         {
-            return _gameSystemRegistry.GetMaxRetainersByCharisma(GetAbilityScore(AbilityType.Cha));
+            return _gameSystemRegistry.GetMaxRetainersByCharisma(GetAbilityScoreValue("Cha"));
         }
 
         public int GetRetainerLoyalty()
         {
-            return _gameSystemRegistry.GetRetainerLoyaltyByCharisma(GetAbilityScore(AbilityType.Cha));
+            return _gameSystemRegistry.GetRetainerLoyaltyByCharisma(GetAbilityScoreValue("Cha"));
         }
 
         public int GetNpcReactionBonus()
         {
-            return _gameSystemRegistry.GetNpcReactionBonusByCharisma(GetAbilityScore(AbilityType.Cha));
+            return _gameSystemRegistry.GetNpcReactionBonusByCharisma(GetAbilityScoreValue("Cha"));
         }
 
         public string GetOpenDoorChance()
         {
-            return _gameSystemRegistry.GetOpenDoorChanceByStrength(GetAbilityScore(AbilityType.Str));
+            return _gameSystemRegistry.GetOpenDoorChanceByStrength(GetAbilityScoreValue("Str"));
         }
 
         public void SetCharacterName(string v)
@@ -224,20 +222,27 @@ namespace GenAIExpertEngineAPI.Services
             CharacterName = v;
         }
 
-        public void SetCharacterRace(CharacterRace v)
+        public void SetCharacterRace(string v)
         {
+            List<string> validRaces = _gameSystemRegistry.GetAllRaces();
+            if (!validRaces.Contains(v, StringComparer.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"Invalid ability type: {v}. Valid types are: {string.Join(", ", validRaces)}");
+            }
             Race = v;
         }
 
-        public void SetCharacterClass(CharacterClass characterClass)
+        public void SetCharacterClass(string characterClass)
         {
-            if (CharacterClass == characterClass)
+            List<string> validClasses = _gameSystemRegistry.GetAllCharacterClasses();
+            if (!validClasses.Contains(characterClass, StringComparer.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"Invalid ability type: {characterClass}. Valid types are: {string.Join(", ", validClasses)}");
+            }
+
+            if (GetCharacterClass() == characterClass)
             {
                 return; // No change in character class
-            }
-            if (Race.HasValue)
-            {
-                // Additional logic for Race if needed
             }
             CharacterClass = characterClass;
 
@@ -253,56 +258,36 @@ namespace GenAIExpertEngineAPI.Services
             Experience.SetXPModifier(this); // Set XP multiplier based on character class
         }
 
-        public void SetAlignment(Alignment v)
+        public void SetAlignment(string v)
         {
+            List<string> validAlignments = _gameSystemRegistry.GetAllRaces();
+            if (!validAlignments.Contains(v, StringComparer.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException($"Invalid ability type: {v}. Valid types are: {string.Join(", ", validAlignments)}");
+            }
             Alignment = v;
         }
 
-        public void GainExperience(int xpGained)
+        public void SetAbilityScore(string abilityType, int value)
         {
-            if (Experience == null)
-            {
-                throw new InvalidOperationException("Experience is not initialized.");
-            }
-            Experience.GainExperience(xpGained, this);
-        }
-
-        public void SetAbilityScore(AbilityType abilityType, int value)
-        {
-            if (AbilityScores.ContainsKey(abilityType))
-            {
-                AbilityScores[abilityType].Value = value;
-            }
-            else
-            {
-                throw new ArgumentException($"Ability type {abilityType} does not exist in the character state.");
-            }
+            GetAbilityScore(abilityType).SetAbilityScore(value);
         }
 
         private void SetKnownLanguages()
         {
-            List<string> languages = _gameSystemRegistry.GetStartingLanguagesByClass(CharacterClass.ToString());
-
+            List<string> languages = _gameSystemRegistry.GetStartingLanguagesByClass(GetCharacterClass());
+            
             KnownLanguages.Clear(); // Clear existing languages as this is an initializing method
-            foreach (string language in languages)
-            {
-                if(Enum.TryParse<Languages>(language, out Languages lang))
-                {
-                    KnownLanguages.Add(lang);
-                }
-                else
-                {
-                    throw new ArgumentException($"Language {language} is not a valid enum value.");
-                }
-            }
+            KnownLanguages = languages;
         }
 
-        private List<Languages> GetAvailableLanguages()
+        private List<string> GetAvailableLanguages()
         {
-            List<Languages> availableLanguages = new List<Languages>();
-            foreach (Languages language in Enum.GetValues<Languages>()) 
+            List<string> availableLanguages = new List<string>();
+            List<string> validLanguages = _gameSystemRegistry.GetAllLanguages();
+            foreach (string language in validLanguages)
             {
-                if (!KnownLanguages.Contains(language) && !language.ToString().Contains("Secret"))
+                if (!KnownLanguages.Contains(language, StringComparer.OrdinalIgnoreCase) && !language.Contains("Secret", StringComparison.OrdinalIgnoreCase))
                 {
                     availableLanguages.Add(language);
                 }
@@ -310,13 +295,13 @@ namespace GenAIExpertEngineAPI.Services
             return availableLanguages;
         }
 
-        public void SetAdditionalLanguage(Languages language = Languages.Common)
+        public void SetAdditionalLanguage(string language = "Common")
         {
             if(additionalLanguages <= 0)
             {
                 return; // No additional languages available to set
             }
-            else if (language == Languages.Common || language == Languages.Alignment)
+            else if (language == "Common" || language == "Alignment")
             {
                 //roll for random language if Common or Alignment is selected
                 do
@@ -336,24 +321,62 @@ namespace GenAIExpertEngineAPI.Services
             }           
         }
 
-        private static Languages GetRandomLanguage()
+        private string GetRandomLanguage()
         {
-            Languages language;
-            Languages[] languages = Enum.GetValues<Languages>();
+            string language;
+            string[] languages = GetAvailableLanguages().ToArray();
             Random random = Dice.random;
             language = languages[random.Next(languages.Length)];
             return language;
+        }
+
+        public void GainExperience(int xpGained)
+        {
+            if (Experience == null)
+            {
+                throw new InvalidOperationException("Experience is not initialized.");
+            }
+            Experience.GainExperience(xpGained, this);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (Health == null)
+            {
+                throw new InvalidOperationException("Health is not initialized.");
+            }
+            Health.TakeDamage(damage);
+        }
+
+        public void Heal(int amount)
+        {
+            if (Health == null)
+            {
+                throw new InvalidOperationException("Health is not initialized.");
+            }
+            Health.Heal(amount);
+        }
+
+        public void GainTempHP(int tempHP)
+        {
+            if (Health == null)
+            {
+                throw new InvalidOperationException("Health is not initialized.");
+            }
+            Health.GainTempHP(tempHP);
         }
     }
 
     public class AbilityScore
     {
         private readonly GameSystemRegistryService _gameSystemRegistry;
+        public string Name { get; private set; }
         public int Value { get; set; } = 9; // Default value for ability scores
         public int Modifier { get; set; }
 
-        public AbilityScore(int value, GameSystemRegistryService gameSystemRegistry)
+        public AbilityScore(string name, int value, GameSystemRegistryService gameSystemRegistry)
         {
+            Name = name;
             Value = value;
             Modifier = GetModifier(value); // Calculate modifier based on the value
             _gameSystemRegistry = gameSystemRegistry;
@@ -441,7 +464,7 @@ namespace GenAIExpertEngineAPI.Services
 
         public HealthState(CharacterState character, GameSystemRegistryService gameSystemRegistry)
         {
-            MaxHP = RollHealth() + character.GetAbilityScores()[AbilityType.Con].Modifier;
+            MaxHP = RollHealth() + character.GetAbilityScore("Con").Modifier;
             CurrentHP = MaxHP;
             HitDiceType = GetHitDiceType(character.GetCharacterClass());
             _gameSystemRegistry = gameSystemRegistry;
@@ -466,7 +489,7 @@ namespace GenAIExpertEngineAPI.Services
             return roll;
         }
 
-        public DiceType GetHitDiceType(CharacterClass characterClass)
+        public DiceType GetHitDiceType(string characterClass)
         {
             string diceType = _gameSystemRegistry.GetHitDiceType(characterClass.ToString());
             DiceType parsedDiceType = DiceType.D6; // Default to d6 if parsing fails
@@ -474,9 +497,49 @@ namespace GenAIExpertEngineAPI.Services
             return parsedDiceType;
         }
 
-        public int GetHitDiceModifier(CharacterClass characterClass, int level)
+        public int GetHitDiceModifier(string characterClass, int level)
         {
             return _gameSystemRegistry.GetHitDiceModifiers(characterClass.ToString(), level);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (damage > 0)
+            {
+                if (TempHP > 0)
+                {
+                    while (damage > 0 && TempHP > 0)
+                    {
+                        TempHP--;
+                        damage--; // Reduce temporary HP by the damage amount
+                    }
+                }
+
+                // Apply damage to current HP after temporary HP is reduced
+                CurrentHP -= damage;
+                if (CurrentHP < 0)
+                {
+                    CurrentHP = 0; // Ensure HP does not go below 0
+                }
+            }            
+        }
+
+        public void Heal(int amount)
+        {
+            CurrentHP += amount;
+            if (CurrentHP > MaxHP)
+            {
+                CurrentHP = MaxHP; // Ensure HP does not exceed MaxHP
+            }
+        }
+
+        public void GainTempHP(int tempHP)
+        {
+            if (tempHP < 0)
+            {
+                throw new ArgumentException("Temporary HP cannot be negative.");
+            }
+            TempHP += tempHP; // Add temporary HP
         }
     }
 
@@ -548,7 +611,7 @@ namespace GenAIExpertEngineAPI.Services
 
                 if (character.Health.MaxHitDiceModifier <= 0)
                 {
-                    character.Health.MaxHP += character.Health.RollHealth() + character.GetAbilityScores()[AbilityType.Con].Modifier;
+                    character.Health.MaxHP += character.Health.RollHealth() + character.GetAbilityScore("Con").Modifier;
                 }
                 else
                 {
@@ -577,12 +640,12 @@ namespace GenAIExpertEngineAPI.Services
 
         }
 
-        private void SetMaxLevel(CharacterClass characterClass)
+        private void SetMaxLevel(string characterClass)
         {
-            LevelMax = _gameSystemRegistry.GetMaxLevel(characterClass.ToString());
+            LevelMax = _gameSystemRegistry.GetMaxLevel(characterClass);
         }
 
-        public int GetXPForNextLevel(CharacterClass characterClass, int currentLevel)
+        public int GetXPForNextLevel(string characterClass, int currentLevel)
         {
             if(currentLevel < 1)
             {
@@ -593,7 +656,7 @@ namespace GenAIExpertEngineAPI.Services
                 return 0; // No XP needed for levels above max
             }
 
-            return _gameSystemRegistry.GetXPForNextLevel(characterClass.ToString(), currentLevel);
+            return _gameSystemRegistry.GetXPForNextLevel(characterClass, currentLevel);
         }
 
         public void SetXPModifier(CharacterState character)
@@ -605,12 +668,12 @@ namespace GenAIExpertEngineAPI.Services
             ExperienceState experienceState = character.Experience;
 
             // Get ability scores
-            int strScore = character.GetAbilityScore(AbilityType.Str);
-            int dexScore = character.GetAbilityScore(AbilityType.Dex);
-            int conScore = character.GetAbilityScore(AbilityType.Con);
-            int intScore = character.GetAbilityScore(AbilityType.Int);
-            int wisScore = character.GetAbilityScore(AbilityType.Wis);
-            int chaScore = character.GetAbilityScore(AbilityType.Cha);
+            int strScore = character.GetAbilityScoreValue("Str");
+            int dexScore = character.GetAbilityScoreValue("Dex");
+            int conScore = character.GetAbilityScoreValue("Con");
+            int intScore = character.GetAbilityScoreValue("Int");
+            int wisScore = character.GetAbilityScoreValue("Wis");
+            int chaScore = character.GetAbilityScoreValue("Cha");
 
             // Get the prime requisites rule for the current character class
             var primeRequisitesRule = _gameSystemRegistry.GetPrimeRequisitesRule(character.GetCharacterClass().ToString());
@@ -640,14 +703,11 @@ namespace GenAIExpertEngineAPI.Services
                         }
                     }
                 }
-                else if (primeRequisitesRule.primary_ability != "None")
+                else if (!string.IsNullOrEmpty(primeRequisitesRule.primary_ability) && primeRequisitesRule.primary_ability != "None")
                 {
                     // This class uses a single primary ability (e.g., Cleric, Fighter, MagicUser)
-                    if (Enum.TryParse(primeRequisitesRule.primary_ability, out AbilityType primaryAbilityType))
-                    {
-                        int primaryAbilityScore = character.GetAbilityScore(primaryAbilityType);
-                        calculatedMultiplier = _gameSystemRegistry.GetXPModifier(character.GetCharacterClass().ToString(), primaryAbilityScore);
-                    }
+                    int primaryAbilityScore = character.GetAbilityScoreValue(primeRequisitesRule.primary_ability);
+                    calculatedMultiplier = _gameSystemRegistry.GetXPModifier(character.GetCharacterClass().ToString(), primaryAbilityScore);
                 }
             }
             // If primeRequisitesRule is null, or has no conditions/primary ability,
@@ -706,7 +766,7 @@ namespace GenAIExpertEngineAPI.Services
             SpellsRodsStaves = savingThrows.SpellsRodsStaves;
         }
 
-        public SavingThrows GetSavingThrows(CharacterClass characterClass, int level)
+        public SavingThrows GetSavingThrows(string characterClass, int level)
         {
             SavingThrowValues savingThrowValues = _gameSystemRegistry.GetSavingThrows(characterClass.ToString(), level);
             if (savingThrowValues == null)
@@ -766,45 +826,55 @@ namespace GenAIExpertEngineAPI.Services
 
         private void SetMeleeDamageBonus(CharacterState character)
         {
-            MeleeDamageBonus = character.GetAbilityScores()[AbilityType.Str].Modifier;
+            MeleeDamageBonus = character.GetAbilityScore("Str").Modifier;
         }
 
         private void SetMeleeHitBonus(CharacterState character)
         {
-            MeleeHitBonus = character.GetAbilityScores()[AbilityType.Str].Modifier;
+            MeleeHitBonus = character.GetAbilityScore("Str").Modifier;
         }
 
         private void SetMissileHitBonus(CharacterState character)
         {
-            MissileHitBonus = character.GetAbilityScores()[AbilityType.Dex].Modifier;
+            MissileHitBonus = character.GetAbilityScore("Dex").Modifier;
         }
 
         private void SetInitiativeBonus(CharacterState character)
         {
-            InitiativeBonus = character.GetAbilityScores()[AbilityType.Dex].Modifier;
+            InitiativeBonus = character.GetAbilityScore("Dex").Modifier;
         }
 
-        public int GetToHitAC(CharacterClass characterClass, int level)
+        public int GetToHitAC(string characterClass, int level)
         {
-            return _gameSystemRegistry.GetToHitAC(characterClass.ToString(), level);
+            return _gameSystemRegistry.GetToHitAC(characterClass, level);
         }
 
-        public int GetToHitACC(CharacterClass characterClass, int level)
+        public int GetToHitACC(string characterClass, int level)
         {
-            return _gameSystemRegistry.GetToHitACC(characterClass.ToString(), level);
+            return _gameSystemRegistry.GetToHitACC(characterClass, level);
         }
     }
 
     public class Spells
     {
         private readonly GameSystemRegistryService _gameSystemRegistry;
+        public string MagicType { get; set; } = "None"; // Default magic type, can be set based on character class
+        public string SpellType { get; set; } = "None"; // Default spell type, can be set based on character class
+        public List<Spell> SpellBook { get; set; } = new List<Spell>();
         // Number of spells available at each level
-        public int Level1 { get; set; } // Number of spells available at level 1
-        public int Level2 { get; set; } // Number of spells available at level 2
-        public int Level3 { get; set; } // Number of spells available at level 3
-        public int Level4 { get; set; } // Number of spells available at level 4
-        public int Level5 { get; set; } // Number of spells available at level 5
-        public int Level6 { get; set; } // Number of spells available at level 6
+        public int Level1Max { get; set; } // Number of spells available at level 1
+        public int Level2Max { get; set; } // Number of spells available at level 2
+        public int Level3Max { get; set; } // Number of spells available at level 3
+        public int Level4Max { get; set; } // Number of spells available at level 4
+        public int Level5Max { get; set; } // Number of spells available at level 5
+        public int Level6Max { get; set; } // Number of spells available at level 6
+        Dictionary<int, string> SpellList { get; set; } = new Dictionary<int, string>(); // List of spells available to the character
+        public string[] Level1SpellSlots { get; set; } = new string[0]; // Array to hold level 1 spell slots
+        public string[] Level2SpellSlots { get; set; } = new string[0]; // Array to hold level 2 spell slots
+        public string[] Level3SpellSlots { get; set; } = new string[0]; // Array to hold level 3 spell slots
+        public string[] Level4SpellSlots { get; set; } = new string[0]; // Array to hold level 4 spell slots
+        public string[] Level5SpellSlots { get; set; } = new string[0]; // Array to hold level 5 spell slots
+        public string[] Level6SpellSlots { get; set; } = new string[0]; // Array to hold level 6 spell slots
 
         public Spells(CharacterState character, GameSystemRegistryService gameSystemRegistry) 
         {
@@ -815,46 +885,80 @@ namespace GenAIExpertEngineAPI.Services
         public Spells(int level1, int level2, int level3, int level4, int level5, int level6, GameSystemRegistryService gameSystemRegistry)
         {
             _gameSystemRegistry = gameSystemRegistry; // Store the game system registry service
-            Level1 = level1;
-            Level2 = level2;
-            Level3 = level3;
-            Level4 = level4;
-            Level5 = level5;
-            Level6 = level6;
+            Level1Max = level1;
+            Level2Max = level2;
+            Level3Max = level3;
+            Level4Max = level4;
+            Level5Max = level5;
+            Level6Max = level6;
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            if (Level1 == 0 && Level2 == 0 && Level3 == 0 && Level4 == 0 && Level5 == 0 && Level6 == 0)
+            if (Level1Max == 0 && Level2Max == 0 && Level3Max == 0 && Level4Max == 0 && Level5Max == 0 && Level6Max == 0)
             {
                 return "No spells available.";
             }
-            else if (Level1 > 0)
+            else if (Level1Max > 0)
             {
-                sb.AppendLine($"Level 1 Spells: {Level1}");
+                sb.AppendLine($"Level 1 Spells: {Level1Max}");
             }
-            if (Level2 > 0)
+            if (Level2Max > 0)
             {
-                sb.AppendLine($"Level 2 Spells: {Level2}");
+                sb.AppendLine($"Level 2 Spells: {Level2Max}");
             }
-            if (Level3 > 0)
+            if (Level3Max > 0)
             {
-                sb.AppendLine($"Level 3 Spells: {Level3}");
+                sb.AppendLine($"Level 3 Spells: {Level3Max}");
             }
-            if (Level4 > 0)
+            if (Level4Max > 0)
             {
-                sb.AppendLine($"Level 4 Spells: {Level4}");
+                sb.AppendLine($"Level 4 Spells: {Level4Max}");
             }
-            if (Level5 > 0)
+            if (Level5Max > 0)
             {
-                sb.AppendLine($"Level 5 Spells: {Level5}");
+                sb.AppendLine($"Level 5 Spells: {Level5Max}");
             }
-            if (Level6 > 0)
+            if (Level6Max > 0)
             {
-                sb.AppendLine($"Level 6 Spells: {Level6}");
+                sb.AppendLine($"Level 6 Spells: {Level6Max}");
             }
             return sb.ToString();
+        }
+
+        public string GetMagicType()
+        {
+            return MagicType.ToString();
+        }
+
+        public void MemorizeSpell(CharacterState character, string spellName)
+        {
+            List<Spell> spellList = new List<Spell>();
+            if (MagicType == "Divine" && character.Experience != null)
+            {
+                for(int i = 1; i <= character.Experience.Level; i++)
+                {
+                    List<string> spellsAtLevel = GetSpellList(character.GetCharacterClass(), i);
+                    foreach (string name in spellsAtLevel)
+                    {
+                        Spell? foundSpell = SpellBook.FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                        if (foundSpell != null)
+                        {
+                            spellList.Add(foundSpell);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                spellList = SpellBook; // Use the spell book for arcane magic
+            }
+
+            //find spell in spelllist
+
+            //if there is an available memory slot at the spell level then memorize the spell
+
         }
 
         public void Update(CharacterState character)
@@ -862,19 +966,34 @@ namespace GenAIExpertEngineAPI.Services
             // Update the number of spells based on character class and level
             if (character.Experience == null)
             {
-                throw new InvalidOperationException("Experience is not initialized.");
+                throw new InvalidOperationException("CharacterClass has not been set.");
             }
-            Spells spellCount = GetSpellCount(character.GetCharacterClass(), character.Experience.Level);
+            //Set spells based on character class and level
+            SetSpells(character);
 
-            Level1 = spellCount.Level1;
-            Level2 = spellCount.Level2;
-            Level3 = spellCount.Level3;
-            Level4 = spellCount.Level4;
-            Level5 = spellCount.Level5;
-            Level6 = spellCount.Level6;
+            // Set the magic type based on character class
+            SetMagicType(character.GetCharacterClass());
+
+            // Set the spell type based on character class
+            SetSpellType(character.GetCharacterClass());
         }
 
-        public Spells GetSpellCount(CharacterClass characterClass, int level)
+        private void SetSpells(CharacterState character)
+        {
+            if (character.Experience != null)
+            {
+                Spells spellCount = GetSpellCount(character.GetCharacterClass(), character.Experience.Level);
+
+                Level1Max = spellCount.Level1Max;
+                Level2Max = spellCount.Level2Max;
+                Level3Max = spellCount.Level3Max;
+                Level4Max = spellCount.Level4Max;
+                Level5Max = spellCount.Level5Max;
+                Level6Max = spellCount.Level6Max; 
+            }
+        }
+
+        public Spells GetSpellCount(string characterClass, int level)
         {
             int[] spells = _gameSystemRegistry.GetSpellsPerLevel(characterClass.ToString(), level);
             if (spells == null || spells.Length < 6)
@@ -890,13 +1009,74 @@ namespace GenAIExpertEngineAPI.Services
                 spells[5], // Level 6 spells
                 _gameSystemRegistry); 
         }
+
+        public void SetMagicType(string characterClass)
+        {
+            string magicType = _gameSystemRegistry.GetMagicType(characterClass.ToString());
+            MagicType = magicType;
+        }
+
+        public void SetSpellType(string characterClass)
+        {
+            string spellType = _gameSystemRegistry.GetSpellType(characterClass.ToString());
+            SpellType = spellType;
+        }
+
+        public List<string> GetSpellList(string characterClass, int level)
+        {
+            return _gameSystemRegistry.GetSpellList(characterClass.ToString(), level);
+        }
     }
 
-    public enum MagicType
+    public class Spell
     {
-        None, // No magic
-        Arcane, // Arcane magic (e.g., magic-user, illusionist)
-        Divine // Divine magic (e.g., clerics, paladins)
+        [JsonPropertyName("spell_type")]
+        public string spellType { get; set; } = "Cleric"; // Type of spell (e.g., MagicUser, Cleric, etc.)
+        [JsonPropertyName("spell_name")]
+        public string Name { get; set; } = string.Empty; // Name of the spell
+        [JsonPropertyName("spell_level")]
+        public int Level { get; set; } // Spell level
+        [JsonPropertyName("spell_duration")]
+        public string Duration { get; set; } = string.Empty; // Duration of the spell effect
+        [JsonPropertyName("spell_range")]
+        public string Range { get; set; } = string.Empty; // Range of the spell
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = string.Empty; // Description of the spell
+    }
+
+    public class EquipmentState
+    {
+        public List<Item> Equipped { get; set; } = new List<Item>();
+        public List<Item> Carrying { get; set; } = new List<Item>();
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Equipped Items:");
+            if (Equipped.Any())
+            {
+                foreach (var item in Equipped)
+                {
+                    sb.AppendLine($"  - {item.ToString()}");
+                }
+            }
+            else
+            {
+                sb.AppendLine("  None");
+            }
+            sb.AppendLine("Carrying Items:");
+            if (Carrying.Any())
+            {
+                foreach (var item in Carrying)
+                {
+                    sb.AppendLine($"  - {item.ToString()}");
+                }
+            }
+            else
+            {
+                sb.AppendLine("  None");
+            }
+            return sb.ToString();
+        }
     }
 
     public class Item
@@ -1026,8 +1206,8 @@ namespace GenAIExpertEngineAPI.Services
         public int AC { get; set; } // Armour Class
         public int AAC { get; set; } // Ascending Armour Class
         public int ACBonus { get; set; } = 0; // Armour Class bonus for shields
-        public ArmourType armourType { get; set; } = ArmourType.None; // Type of armour (e.g., light armour, heavy armour.)
-        public Armour(string name, int ac, int cost, int weight, ArmourType armourType = ArmourType.None, string description = "")
+        public string armourType { get; set; } = "None"; // Type of armour (e.g., light armour, heavy armour.)
+        public Armour(string name, int ac, int cost, int weight, string armourType = "None", string description = "")
         {
             Name = name;
             AC = ac;
@@ -1052,41 +1232,6 @@ namespace GenAIExpertEngineAPI.Services
                 sb.AppendLine($"  Shield Bonus: {ACBonus} AC");
             }
             sb.AppendLine($"  Value: {Value} gp, Weight: {Weight} coins");
-            return sb.ToString();
-        }
-    }
-
-    public class EquipmentState
-    {
-        public List<Item> Equipped { get; set; } = new List<Item>();
-        public List<Item> Carrying { get; set; } = new List<Item>();
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Equipped Items:");
-            if (Equipped.Any())
-            {
-                foreach (var item in Equipped)
-                {
-                    sb.AppendLine($"  - {item.ToString()}");
-                }
-            }
-            else
-            {
-                sb.AppendLine("  None");
-            }
-            sb.AppendLine("Carrying Items:");
-            if (Carrying.Any())
-            {
-                foreach (var item in Carrying)
-                {
-                    sb.AppendLine($"  - {item.ToString()}");
-                }
-            }
-            else
-            {
-                sb.AppendLine("  None");
-            }
             return sb.ToString();
         }
     }
@@ -1118,7 +1263,7 @@ namespace GenAIExpertEngineAPI.Services
             _gameSystemRegistry = gameSystemRegistry;
         }
 
-        public int ConvertCoinToGold(CoinType type, int coin)
+        public int ConvertCoinToGold(string type, int coin)
         {
             float conversion = _gameSystemRegistry.GetCoinConversionRate(type.ToString());
             return (int)Math.Floor(coin * conversion);
@@ -1134,109 +1279,5 @@ namespace GenAIExpertEngineAPI.Services
 
             public Domain() { }
         }
-    }
-
-    public enum AbilityType
-    {
-        Str,
-        Dex,
-        Con,
-        Int,
-        Wis,
-        Cha
-    }
-
-    public enum Alignment
-    {
-        Lawful,
-        Chaotic,
-        Neutral
-    }
-
-    public enum Languages
-    {
-        Common,
-        Alignment,
-        Bugbear,
-        Doppelgänger,
-        Dragon,
-        Dwarvish,
-        Elvish,
-        Gargoyle,
-        Gnoll,
-        Gnomish,
-        Goblin,
-        Halfling,
-        Harpy,
-        Hobgoblin,
-        Kobold,
-        LizardMan,
-        Medusa,
-        Minotaur,
-        Ogre,
-        Orcish,
-        Pixie,
-        HumanDialect,
-        Deepcommon,
-        SecretSpider,
-        SecretBurrowingMammals,
-        SecretEarthElemental
-    }
-
-    public enum CharacterClass
-    {
-        Cleric,
-        Dwarf,
-        Elf,
-        Fighter,
-        Halfling,
-        MagicUser,
-        Thief,
-        Acrobat,
-        Assassin,
-        Barbarian,
-        Bard,
-        Drow,
-        Druid,
-        Duergar,
-        Gnome,
-        HalfElf,
-        HalfOrc,
-        Illusionist,
-        Knight,
-        Paladin,
-        Ranger,
-        Svirfneblin,
-        Necromancer
-    }
-
-    public enum CharacterRace
-    {
-        Dwarf,
-        Elf,
-        Human,
-        Halfling,
-        Drow,
-        Duergar,
-        Gnome,
-        HalfElf,
-        HalfOrc,
-        Svirfneblin
-    }
-
-    public enum ArmourType
-    {
-        None, // No armour
-        Light, // Light armour (e.g., leather)
-        Heavy // Heavy armour (e.g., chainmail, plate mail)
-    }
-
-    public enum CoinType
-    {
-        Gold,
-        Platinum,
-        Electrum,
-        Silver,
-        Copper
     }
 }
