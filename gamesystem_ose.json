@@ -2,11 +2,6 @@
   "GameSystemName": "Old-School Essentials (OSE)",
   "Version": "1.0",
   "Enums": {
-    "MagicType": [
-      "None", // No magic
-      "Arcane", // Arcane magic (e.g., magic-user, illusionist)
-      "Divine" // Divine magic (e.g., clerics, paladins)
-    ],
     "AbilityType": [
       "Str",
       "Dex",
@@ -85,6 +80,19 @@
       "HalfOrc",
       "Svirfneblin"
     ],
+    "MagicType": [
+      "None", // No magic
+      "Arcane", // Arcane magic (e.g., magic-user, illusionist)
+      "Divine" // Divine magic (e.g., clerics, paladins)
+    ],
+    "SpellType": [
+      "None",
+      "Cleric",
+      "MagicUser",
+      "Druid",
+      "Illusionist",
+      "Necromancer"
+    ]
     "ArmourType": [
       "None", // No armour
       "Light", // Light armour (e.g., leather)
